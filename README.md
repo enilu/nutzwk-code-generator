@@ -43,4 +43,7 @@
  
 ## 后续功能
  
- -- 跟据实体Entity生成其他代码（Controller，Service,View)
+- 跟据实体Entity生成其他代码（Controller，Service,View)
+- 根据实体约束生成相关验证代码
+- 去掉hibernate-valid 依赖
+- 其他...
