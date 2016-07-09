@@ -1,9 +1,12 @@
+# nutzwk-code-generator
+
 ## nutzwk 自动生成代码
-- 自动生成代码，包括entity、service、controller和view
+- 自动生成nutzwk的代码代码，包括entity、service、controller和view
 - 根据事先建立好的数据库表，生成对应的entity，service，controller和view
 - 包括功能：添加，修改，删除，批量删除，分页查询功能。
 - 模板引擎使用velocity
-### 使用方法
+
+### 使用手册
 
         usage: Main [options] [all|entity|service|controller|view]
          -c,--config <arg>     spring datasource config file(classpath)
@@ -38,3 +41,5 @@
  ![生成代码结构图](code-structure.png)
  
  
+ ### 备注
+ -- 建议使用的时候，可以直接
