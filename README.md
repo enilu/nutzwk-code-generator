@@ -6,7 +6,7 @@
 - 包括功能：添加，修改，删除，批量删除，分页查询功能。
 - 模板引擎使用velocity
 
-### 使用手册
+## 使用手册
 
         usage: Main [options] [all|entity|service|controller|view]
          -c,--config <arg>     spring datasource config file(classpath)
@@ -18,7 +18,7 @@
          -u,--base-uri <arg>   base uri prefix, default is /
          -x,--exclude <arg>    exclude table pattern
 
-###举例
+##举例
 
 - 比如使用下面语句建表：
 
@@ -41,5 +41,6 @@
  ![生成代码结构图](code-structure.png)
  
  
- ### 备注
- -- 建议使用的时候，可以直接
+## 后续功能
+ 
+ -- 跟据实体Entity生成其他代码（Controller，Service,View)
