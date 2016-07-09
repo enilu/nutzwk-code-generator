@@ -1,6 +1,10 @@
 # nutzwk-code-generator
 
-## nutzwk 自动生成代码
+## 特点
+- 和nutz其他代码生成器比较，主要具备的特点是代码量少，只有三个java类，和若干模板文件，一个数据库连接配置文件。
+- 这么比貌似不厚道，因为其他生成器不仅功能强大，而且还有ui界面。
+
+## 功能介绍
 - 自动生成nutzwk的代码代码，包括entity、service、controller和view
 - 根据事先建立好的数据库表，生成对应的entity，service，controller和view
 - 包括功能：添加，修改，删除，批量删除，分页查询功能。
