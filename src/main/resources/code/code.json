@@ -1,0 +1,16 @@
+{
+    dataSource : {
+        type : "com.alibaba.druid.pool.DruidDataSource",
+            events : {
+            depose : 'close'
+        },
+        fields : {
+            driverClassName : "com.mysql.jdbc.Driver",
+                url : "jdbc:mysql://localhost:3306/nutzwk",
+                username : "root",
+                password : "root",
+                maxWait: 15000,
+                defaultAutoCommit : false
+        }
+    }
+}

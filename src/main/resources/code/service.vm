@@ -1,0 +1,17 @@
+package ${packageName};
+
+import cn.wizzer.common.base.Service;
+import ${table.EntityFullClassName};
+import org.nutz.dao.Dao;
+import org.nutz.ioc.loader.annotation.IocBean;
+import org.nutz.log.Log;
+import org.nutz.log.Logs;
+@IocBean(args = {"refer:dao"})
+public class ${table.ServiceClassName} extends Service<${table.EntityClassName}> {
+	private static final Log log = Logs.get();
+
+    public ${table.ServiceClassName}(Dao dao) {
+    	super(dao);
+    }
+}
+
