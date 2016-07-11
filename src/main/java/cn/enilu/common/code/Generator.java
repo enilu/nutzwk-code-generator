@@ -98,9 +98,9 @@ public class Generator {
 		options.addOption("i", "include", true, "include table pattern");
 		options.addOption("x", "exclude", true, "exclude table pattern");
 		options.addOption("p", "package", true, "base package name,default:cn.wizzer.modules");
-		options.addOption("ctr", "package", true, "controller base package name,default:cn.wizzer.modules");
-		options.addOption("mod", "package", true, "model base package name,default:cn.wizzer.modules");
-		options.addOption("sev", "package", true, "service base package name,default:cn.wizzer.modules");
+		options.addOption("ctr", "package", true, "controller base package name,default:${package}/controllers");
+		options.addOption("mod", "package", true, "model base package name,default:${package}/models");
+		options.addOption("sev", "package", true, "service base package name,default:${package}/services");
 		options.addOption("o", "output", true, "output directory, default is "
 				+ outputDir);
 		options.addOption("u", "base-uri", true,
