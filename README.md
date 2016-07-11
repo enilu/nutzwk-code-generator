@@ -51,3 +51,20 @@
 - 根据实体约束生成相关验证代码
 - 去掉hibernate-valid 依赖
 - 其他...
+
+
+## 用法
+
+下载项目后可以直接生成本地项目，然后在要使用的项目中添加依赖：
+
+安装到本地仓库：
+
+    mvn install
+
+在自己的项目中添加依赖
+
+        <dependency>
+            <groupId>cn.enilu</groupId>
+            <artifactId>nutzwk-code-generator</artifactId>
+            <version>1.0</version>
+        </dependency>
