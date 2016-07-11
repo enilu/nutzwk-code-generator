@@ -58,9 +58,9 @@ public class ${table.ControllerClassName} {
     public Object addDo(@Param("..") ${table.EntityClassName} ${table.EntityInstanceName}, HttpServletRequest req) {
 		try {
 			${table.ServiceInstanceName}.insert(${table.EntityInstanceName});
-			return Result.success("system.success", req);
+			return Result.success("system.success");
 		} catch (Exception e) {
-			return Result.error("system.error", req);
+			return Result.error("system.error");
 		}
     }
 
@@ -77,11 +77,11 @@ public class ${table.ControllerClassName} {
     public Object editDo(@Param("..") ${table.EntityClassName} ${table.EntityInstanceName}, HttpServletRequest req) {
 		try {
 
-			${table.EntityInstanceName}.setUpdateAt((int) (System.currentTimeMillis() / 1000));
+			${table.EntityInstanceName}.setOpAt((int) (System.currentTimeMillis() / 1000));
 			${table.ServiceInstanceName}.updateIgnoreNull(${table.EntityInstanceName});
-			return Result.success("system.success", req);
+			return Result.success("system.success");
 		} catch (Exception e) {
-			return Result.error("system.error", req);
+			return Result.error("system.error");
 		}
     }
 
@@ -95,9 +95,9 @@ public class ${table.ControllerClassName} {
 			${table.ServiceInstanceName}.delete(id);
 			//req.setAttribute("userName", ${table.EntityInstanceName}.getUserName());
     		req.setAttribute("userName", ${table.EntityInstanceName}.getId());
-			return Result.success("system.success", req);
+			return Result.success("system.success");
 		} catch (Exception e) {
-			return Result.error("system.error", req);
+			return Result.error("system.error");
 		}
     }
 
@@ -112,9 +112,9 @@ public class ${table.ControllerClassName} {
 				sb.append(s).append(",");
 			}
 			req.setAttribute("ids", sb.toString());
-			return Result.success("system.success", req);
+			return Result.success("system.success");
 		} catch (Exception e) {
-			return Result.error("system.error", req);
+			return Result.error("system.error");
 		}
     }
 

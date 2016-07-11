@@ -23,10 +23,14 @@ public class TableDescriptor {
 	
 	private String comment;
 	private String label;
+	private String serPackageName;
+	private String modPackageName;
 
-	public TableDescriptor(String name, String basePackageName, String baseUri) {
+	public TableDescriptor(String name, String basePackageName, String baseUri,String serPackageName,String modPackageName) {
 		this.name = name;
 		this.basePackageName = basePackageName;
+		this.serPackageName = serPackageName;
+		this.modPackageName = modPackageName;
 		if (!baseUri.endsWith("/")) {
 			baseUri = baseUri + "/";
 		}
@@ -69,16 +73,32 @@ public class TableDescriptor {
 		return baseUri.replaceFirst("/", "") + getPlural();
 	}
 
+	public String getModPackageName() {
+		return modPackageName;
+	}
+
+	public void setModPackageName(String modPackageName) {
+		this.modPackageName = modPackageName;
+	}
+
+	public String getSerPackageName() {
+		return serPackageName;
+	}
+
+	public void setSerPackageName(String serPackageName) {
+		this.serPackageName = serPackageName;
+	}
+
 	public String getEntityClassName() {
 		return CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, name);
 	}
 
 	public String getEntityFullClassName() {
-		return basePackageName + ".entity." + getEntityClassName();
+		return basePackageName + "."+getModPackageName()+"." + getEntityClassName();
 	}
 
 	public String getServiceFullClassName() {
-		return basePackageName + ".service." + getServiceClassName();
+		return basePackageName + "."+getSerPackageName()+"." + getServiceClassName();
 	}
 
 	public String getEntityInstanceName() {

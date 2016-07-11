@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+
 public class Generator {
 	private final Map<String, TableDescriptor> tables;
 	private final TableDescriptor table;
@@ -83,6 +84,10 @@ public class Generator {
 		Pattern includePattern = Pattern.compile(".*");
 		Pattern excludePattern = null;
 		String basePackageName = "cn.wizzer.modules";
+		String controllerPackageName = "controllers";
+		String servicePackageName = "services";
+		String modelPackageName = "models";
+
 		String outputDir = "src/main/java";
 		boolean force = false;
 		String baseUri = "/";
@@ -93,6 +98,9 @@ public class Generator {
 		options.addOption("i", "include", true, "include table pattern");
 		options.addOption("x", "exclude", true, "exclude table pattern");
 		options.addOption("p", "package", true, "base package name,default:cn.wizzer.modules");
+		options.addOption("ctr", "package", true, "controller base package name,default:cn.wizzer.modules");
+		options.addOption("mod", "package", true, "model base package name,default:cn.wizzer.modules");
+		options.addOption("sev", "package", true, "service base package name,default:cn.wizzer.modules");
 		options.addOption("o", "output", true, "output directory, default is "
 				+ outputDir);
 		options.addOption("u", "base-uri", true,
@@ -118,6 +126,17 @@ public class Generator {
 			if (commandLine.hasOption("p")) {
 				basePackageName = commandLine.getOptionValue("p");
 			}
+
+			if (commandLine.hasOption("ctr")) {
+				controllerPackageName = commandLine.getOptionValue("ctr");
+			}
+			if (commandLine.hasOption("sev")) {
+				servicePackageName = commandLine.getOptionValue("sev");
+			}
+			if (commandLine.hasOption("mod")) {
+				modelPackageName = commandLine.getOptionValue("mod");
+			}
+
 			if (commandLine.hasOption("o")) {
 				outputDir = commandLine.getOptionValue("o");
 			}
@@ -136,8 +155,8 @@ public class Generator {
 			usage(options);
 		}
 
-		Map<String, TableDescriptor> tables = loadTables(configPath, basePackageName,
-				baseUri);
+		Map<String, TableDescriptor> tables = TableDescLoader.loadTables(configPath, basePackageName,
+				baseUri,servicePackageName,modelPackageName);
 
 		for (Map.Entry<String, TableDescriptor> entry : tables.entrySet()) {
 			String tableName = entry.getKey();
@@ -158,8 +177,12 @@ public class Generator {
 
 			System.out.println("generate " + tableName + " ...");
 			Generator generator = new Generator(tables, table);
+			Map<String,String> typeMap = new HashMap<String,String>();
+			typeMap.put("model",modelPackageName);
+			typeMap.put("service",servicePackageName);
+			typeMap.put("controller",controllerPackageName);
 
-			for (String type : new String[] { "entity", "service",
+			for (String type : new String[] { "model", "service",
 					"controller", "view" }) {
 				if (!isTypeMatch(types, type)) {
 					continue;
@@ -167,12 +190,12 @@ public class Generator {
 				if (type.equals("view")) {
 					generateViews(force, table, generator);
 				} else {
-					String packageName = basePackageName + "." + type;
+					String packageName = basePackageName + "." + typeMap.get(type);
 					String templatePath = "code/" + type + ".vm";
 
 					String packagePath = packageName.replace('.', '/');
 					String className = table.getEntityClassName();
-					if (!"entity".equals(type)) {
+					if (!"model".equals(type)) {
 						className = className
 								+ CaseFormat.LOWER_UNDERSCORE.to(
 								CaseFormat.UPPER_CAMEL, type);
@@ -208,121 +231,7 @@ public class Generator {
 		}
 	}
 
-	private static Map<String, TableDescriptor> loadTables(String configPath,
-														   String basePackageName, String baseUri) throws SQLException {
 
-
-		Ioc ioc = new NutIoc(new JsonLoader(configPath));
-		DataSource ds = ioc.get(DataSource.class);
-		Dao dao = new NutDao(ds);
-		Sql sql = Sqls.create("select database()");
-
-		sql.setCallback(new SqlCallback() {
-			@Override
-			public Object invoke(Connection conn, ResultSet rs, Sql sql) throws SQLException {
-				if (rs.next()) {
-					return rs.getString(1);
-				}
-				return null;
-			}
-		});
-		dao.execute(sql);
-		String database = sql.getString();
-
-
-		Sql tableSchemaSql = Sqls.create("select * from INFORMATION_SCHEMA.COLUMNS where TABLE_SCHEMA = '"
-				+ database + "'");
-
-		tableSchemaSql.setCallback(new SqlCallback() {
-			@Override
-			public Object invoke(Connection conn, ResultSet rs, Sql sql) throws SQLException {
-				ResultSetMetaData metaData = rs.getMetaData();
-				int columnCount = metaData.getColumnCount();
-
-				List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
-				while (rs.next()) {
-					Map<String, Object> record = new HashMap<String, Object>();
-					for (int i = 1; i <= columnCount; i++) {
-						String columnName = metaData.getColumnName(i);
-						record.put(columnName, rs.getObject(columnName));
-					}
-					result.add(record);
-
-
-				}
-				return result;
-			}
-		});
-		dao.execute(tableSchemaSql);
-
-
-		List<Map> columns =tableSchemaSql.getList(Map.class);
-
-		Map<String, TableDescriptor> tables = Maps.newHashMap();
-		for (Map<String, Object> columnInfo : columns) {
-			String tableName = (String) columnInfo.get("TABLE_NAME");
-
-			ColumnDescriptor column = new ColumnDescriptor();
-			column.columnName = (String) columnInfo.get("COLUMN_NAME");
-			if("createAt".equals(column.columnName)||"updateAt".equals(column.columnName)){
-				continue;
-			}
-			column.setDefaultValue(columnInfo.get("COLUMN_DEFAULT"));
-			column.dataType = (String) columnInfo.get("DATA_TYPE");
-			column.nullable = "YES".equals(columnInfo.get("IS_NULLABLE"));
-			column.primary = "PRI".equals(columnInfo.get("COLUMN_KEY"));
-
-			String columnType = (String) columnInfo.get("COLUMN_TYPE");
-			column.setColumnType(columnType);
-			column.setComment((String) columnInfo.get("COLUMN_COMMENT"));
-
-			TableDescriptor table = tables.get(tableName);
-			if (table == null) {
-				table = new TableDescriptor(tableName, basePackageName, baseUri);
-				tables.put(tableName, table);
-			}
-			table.addColumn(column);
-		}
-		Sql infomationSchemaSql = Sqls.create("select * from INFORMATION_SCHEMA.TABLES where TABLE_SCHEMA = '"
-				+ database + "'");
-		infomationSchemaSql.setCallback(new SqlCallback() {
-			@Override
-			public Object invoke(Connection conn, ResultSet rs, Sql sql) throws SQLException {
-				ResultSetMetaData metaData = rs.getMetaData();
-				int columnCount = metaData.getColumnCount();
-
-				List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
-				while (rs.next()) {
-					Map<String, Object> record = new HashMap<String, Object>();
-					for (int i = 1; i <= columnCount; i++) {
-						String columnName = metaData.getColumnName(i);
-						record.put(columnName, rs.getObject(columnName));
-					}
-					result.add(record);
-
-
-				}
-				return result;
-			}
-		});
-		dao.execute(infomationSchemaSql);
-
-
-		List<Map> tableInfos =infomationSchemaSql.getList(Map.class);
-
-		for (Map<String, Object> tableInfo : tableInfos) {
-			String tableName = (String) tableInfo.get("TABLE_NAME");
-			String comment = (String) tableInfo.get("TABLE_COMMENT");
-
-			TableDescriptor table = tables.get(tableName);
-			if (table != null) {
-				table.setComment(comment);
-			}
-		}
-
-
-		return tables;
-	}
 
 	private static void usage(Options options) {
 		HelpFormatter formatter = new HelpFormatter();

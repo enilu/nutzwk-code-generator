@@ -35,6 +35,7 @@ public class ColumnDescriptor {
 		typeMapping.put("timestamp", Integer.class);
 		typeMapping.put("datetime", Integer.class);
 		typeMapping.put("boolean", boolean.class);
+		typeMapping.put("tinyint",boolean.class);
 		typeMapping.put("bool", boolean.class);
 		typeMapping.put("decimal", BigDecimal.class);
 	}
