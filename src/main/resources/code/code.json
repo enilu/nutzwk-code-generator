@@ -14,7 +14,9 @@
         }
     },
     loader:{
+        //根据实体生成代码
         type:'cn.enilu.common.code.EntityDescLoader'
+        //根据表结构生成代码
+        //type:'cn.enilu.common.code.TableDescLoader'
     }
-    //EntityDescLoader
 }

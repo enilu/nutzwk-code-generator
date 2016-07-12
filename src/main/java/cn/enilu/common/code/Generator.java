@@ -226,7 +226,7 @@ public class Generator {
 
 	private static void generateViews(boolean force, TableDescriptor table,
 									  Generator generator) throws IOException {
-		for (String view : new String[] { "index", "add", "edit", "show" }) {
+		for (String view : new String[] { "index", "add", "edit", "detail" }) {
 			String templatePath = "code/view/" + view + ".html.vm";
 			File file = new File("src/main/webapp/WEB-INF/views"
 					+ table.getUriPrefix() + "/" + view
