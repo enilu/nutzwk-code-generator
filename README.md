@@ -12,17 +12,21 @@
 
 ## 使用手册
 
-        usage: Main [options] [all|entity|service|controller|view]
-         -c,--config <arg>     spring datasource config file(classpath)
-         -f,--force            force generate file even if file exists
-         -h,--help             show help message
-         -i,--include <arg>    include table pattern
-         -o,--output <arg>     output directory, default is src/main/java
-         -p,--package <arg>    base package name
-         -u,--base-uri <arg>   base uri prefix, default is /
-         -x,--exclude <arg>    exclude table pattern
+     -c,--config <arg>      spring datasource config file(classpath),default:code.json
+     -ctr,--package <arg>   controller base package name,default:${package}/controllers
+     -f,--force             force generate file even if file exists,default:false
+     -h,--help              show help message
+     -i,--include <arg>     include table pattern,default:all of tables
+     -mod,--package <arg>   model base package name,default:${package}/models
+     -o,--output <arg>      output directory, default is src/main/java
+     -p,--package <arg>     base package name,default:cn.wizzer.modules
+     -sev,--package <arg>   service base package name,default:${package}/services
+     -u,--base-uri <arg>    base uri prefix, default is /
+     -x,--exclude <arg>     exclude table pattern
 
 ##举例
+
+### 1,根据表生成相关代码
 
 - 比如使用下面语句建表：
 
@@ -38,11 +42,41 @@
 
 - 运行Generator类的时候加上如下参数：         
     
-        -p cn.wizzer.modules.inventory -i dic_country -u /inventory
-  
+        -i dic_country -p cn.wizzer.modules.back.sys  -u /private/sys
+        
 - 会生成目录结构如下的代码：
  
  ![生成代码结构图](code-structure.png)
+ 
+### 2,根据java实体生成相关代码
+- 准备 java model类：
+
+    
+        @Comment("国家")
+        @Table("dic_country")
+        public class DicCountry  implements Serializable {
+            private static final long serialVersionUID = 1L;
+            @Name
+            @Prev(els = {@EL("uuid()")})
+            private String id;            
+            @Column
+            @Comment("编码")
+            @ColDefine(type = ColType.VARCHAR)
+            private String code;            
+            @Column
+            @Comment("名称")
+            @ColDefine(type = ColType.VARCHAR)
+            private String name;            
+            setter...
+            getter...   
+        }
+      
+- 运行Generator类的时候加上如下参数：         
+    
+        -i dic_country -p cn.wizzer.modules.back.sys  -u /private/sys
+
+        
+- 会生成和上图一致的代码
  
  
 ## 后续功能
