@@ -155,7 +155,8 @@ public class Generator {
 			usage(options);
 		}
 
-		Map<String, TableDescriptor> tables = TableDescLoader.loadTables(configPath, basePackageName,
+		Loader loader = ioc.get(Loader.class,"loader");
+		Map<String, TableDescriptor> tables = loader.loadTables(configPath, basePackageName,
 				baseUri,servicePackageName,modelPackageName);
 
 		for (Map.Entry<String, TableDescriptor> entry : tables.entrySet()) {
@@ -190,6 +191,9 @@ public class Generator {
 				if (type.equals("view")) {
 					generateViews(force, table, generator);
 				} else {
+					if(loader instanceof  EntityDescLoader &&type.equals("model")){
+						continue;
+					}
 					String packageName = basePackageName + "." + typeMap.get(type);
 					String templatePath = "code/" + type + ".vm";
 

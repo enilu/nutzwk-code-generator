@@ -127,6 +127,10 @@ public class ColumnDescriptor {
 		return label != null;
 	}
 
+	public void setLabel(String label) {
+		this.label = label;
+	}
+
 	public String getLabel() {
 		if (label != null) {
 			return label;

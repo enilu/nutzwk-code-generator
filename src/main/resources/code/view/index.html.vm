@@ -102,7 +102,7 @@ layout("/layouts/private.html"){
                     d.unitid = $('#unitid').val();
                 }
             },
-            "order": [[0, "desc"]],
+//            "order": [[0, "desc"]],
             "columns": [
 #foreach ($column in $table.IndexColumns)
 #set($columSize=$columSize+1)

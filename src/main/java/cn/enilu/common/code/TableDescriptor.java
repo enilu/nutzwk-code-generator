@@ -276,13 +276,17 @@ public class TableDescriptor {
 		List<ColumnDescriptor> result = Lists.newArrayList();
 
 		for (ColumnDescriptor column : columns) {
-			if (!Strings.isNullOrEmpty(column.getQueryOperator())
+			if (!Strings.isNullOrEmpty(column.getLabel())
 					|| "created_at".equals(column.columnName)) {
 				result.add(column);
 			}
 		}
 
 		return result;
+	}
+
+	public void setLabel(String label) {
+		this.label = label;
 	}
 
 	public String getLabel() {

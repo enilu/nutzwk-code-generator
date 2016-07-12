@@ -26,9 +26,12 @@ import java.util.Map;
  * 作者: zhangtao <br>
  * 创建日期: 16-7-10<br>
  */
-public class TableDescLoader {
-    public static Map<String, TableDescriptor> loadTables(String configPath,
-                                                           String basePackageName, String baseUri,String servPackageName,String modPackageName) throws SQLException {
+public class TableDescLoader extends Loader{
+
+
+    @Override
+    public   Map<String, TableDescriptor> loadTables(String configPath,
+                                                     String basePackageName, String baseUri,String servPackageName,String modPackageName) throws SQLException {
 
 
         Ioc ioc = new NutIoc(new JsonLoader(configPath));

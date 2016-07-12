@@ -9,8 +9,12 @@
                 url : "jdbc:mysql://localhost:3306/nutzwk",
                 username : "root",
                 password : "root",
-                maxWait: 15000,
+                maxWait: 20000,
                 defaultAutoCommit : false
         }
+    },
+    loader:{
+        type:'cn.enilu.common.code.EntityDescLoader'
     }
+    //EntityDescLoader
 }
