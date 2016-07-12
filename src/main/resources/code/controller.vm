@@ -67,7 +67,7 @@ public class ${table.ControllerClassName} {
     @At("/edit/?")
     @Ok("beetl:${table.UriPrefix}/edit.html")
     @RequiresAuthentication
-    public Object edit(String id) {
+    public Object edit(${table.pkType} id) {
 		return ${table.ServiceInstanceName}.fetch(id);
     }
 
@@ -89,7 +89,7 @@ public class ${table.ControllerClassName} {
     @At({"/delete","/delete/?"})
     @Ok("json")
     @SLog(tag = "删除${table.Label}", msg = "ID:$parameterId2")
-    public Object delete(String id, @Param("ids") String[] ids ,HttpServletRequest req) {
+    public Object delete(${table.pkType} id, @Param("ids") ${table.pkType}[] ids ,HttpServletRequest req) {
 		try {
 			if(ids!=null&&ids.length>0){
 				${table.ServiceInstanceName}.delete(ids);
@@ -106,7 +106,7 @@ public class ${table.ControllerClassName} {
     @At("/detail/?")
     @Ok("beetl:${table.UriPrefix}/detail.html")
     @RequiresAuthentication
-		public Object detail(String id) {
+		public Object detail(${table.pkType} id) {
 			if (!Strings.isBlank(id)) {
 				return ${table.ServiceInstanceName}.fetch(id);
 

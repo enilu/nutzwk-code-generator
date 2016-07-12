@@ -103,6 +103,9 @@ public class TableDescLoader extends Loader{
                 table = new TableDescriptor(tableName, basePackageName, baseUri,servPackageName,modPackageName);
                 tables.put(tableName, table);
             }
+            if(column.primary){
+                table.setPkType(column.getSimpleJavaTypeName());
+            }
             table.addColumn(column);
         }
         Sql infomationSchemaSql = Sqls.create("select * from INFORMATION_SCHEMA.TABLES where TABLE_SCHEMA = '"

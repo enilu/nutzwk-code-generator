@@ -46,11 +46,11 @@ public class EntityDescLoader extends  Loader {
             if(comment!=null) {
                   commentStr = comment.value();
             }
-            Table table = (Table) mirror.getAnnotation(Table.class);
-            String tableName = table.value();
-            TableDescriptor tableDescriptor = new TableDescriptor(tableName,basePackageName,baseUri,servPackageName,modPackageName);
-            tableDescriptor.setLabel(commentStr);
-            tables.put(tableName, tableDescriptor);
+            Table tableAnno = (Table) mirror.getAnnotation(Table.class);
+            String tableName = tableAnno.value();
+            TableDescriptor table = new TableDescriptor(tableName,basePackageName,baseUri,servPackageName,modPackageName);
+            table.setLabel(commentStr);
+            tables.put(tableName, table);
             Field[] fields = mirror.getFields();
             mirror.getFields();
             for(Field field:fields){
@@ -66,6 +66,7 @@ public class EntityDescLoader extends  Loader {
                     }
                     if(annotation instanceof  Id||annotation instanceof Name){
                         column.primary=true;
+                        table.setPkType(column.getSimpleJavaTypeName());
                     }
                     if(annotation instanceof ColDefine){
                         ColType colType = ((ColDefine) annotation).type();
@@ -83,7 +84,7 @@ public class EntityDescLoader extends  Loader {
 
 
                 }
-                tableDescriptor.addColumn(column);
+                table.addColumn(column);
             }
 
 

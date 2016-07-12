@@ -20,11 +20,12 @@ public class TableDescriptor {
 	private final List<ColumnDescriptor> columns = new ArrayList<ColumnDescriptor>();
 	
 	public final String name;
-	
+	private String pkType;
 	private String comment;
 	private String label;
 	private String serPackageName;
 	private String modPackageName;
+
 
 	public TableDescriptor(String name, String basePackageName, String baseUri,String serPackageName,String modPackageName) {
 		this.name = name;
@@ -47,6 +48,14 @@ public class TableDescriptor {
 
 	public String getPlural() {
 		return English.plural(name);
+	}
+
+	public String getPkType() {
+		return pkType;
+	}
+
+	public void setPkType(String pkType) {
+		this.pkType = pkType;
 	}
 
 	public String getBasePackageName() {
