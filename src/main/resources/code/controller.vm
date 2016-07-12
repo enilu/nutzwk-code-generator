@@ -86,32 +86,16 @@ public class ${table.ControllerClassName} {
     }
 
 
-    @At("/delete/?")
+    @At({"/delete","/delete/?"})
     @Ok("json")
     @SLog(tag = "删除${table.Label}", msg = "ID:$parameterId2")
-    public Object delete(String id, HttpServletRequest req) {
+    public Object delete(String id, @Param("ids") String[] ids ,HttpServletRequest req) {
 		try {
-			${table.EntityClassName} ${table.EntityInstanceName} = ${table.ServiceInstanceName}.fetch(id);
-			${table.ServiceInstanceName}.delete(id);
-			//req.setAttribute("userName", ${table.EntityInstanceName}.getUserName());
-    		req.setAttribute("userName", ${table.EntityInstanceName}.getId());
-			return Result.success("system.success");
-		} catch (Exception e) {
-			return Result.error("system.error");
-		}
-    }
-
-    @At("/delete")
-    @Ok("json")
-    @SLog(tag = "批量删除${table.Label}", msg = "")
-    public Object deletes(@Param("ids") String[] ids , HttpServletRequest req) {
-		try {
-			dicCountryService.delete(ids);
-			StringBuilder sb = new StringBuilder();
-			for (String s : ids) {
-				sb.append(s).append(",");
+			if(ids!=null&&ids.length>0){
+				${table.ServiceInstanceName}.delete(ids);
+			}else{
+				${table.ServiceInstanceName}.delete(id);
 			}
-			req.setAttribute("ids", sb.toString());
 			return Result.success("system.success");
 		} catch (Exception e) {
 			return Result.error("system.error");
