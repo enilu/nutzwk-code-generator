@@ -15,12 +15,12 @@ layout("/layouts/private.html"){
             <input id="unitid" type="hidden">
             <table class="table table-bordered table-striped mg-t datatable">
                 <thead>
-                <tr>
+                    <tr>
 #foreach ($column in $table.IndexColumns)
-                        <th>${column.Label}</th>
+                            <th>${column.Label}</th>
 #end
-                    <th>操作</th>
-                </tr>
+                            <th>操作</th>
+                    </tr>
                 </thead>
             </table>
         </div>
@@ -50,31 +50,6 @@ layout("/layouts/private.html"){
         </div>
     </div>
 </div>
-<!-- 删除${table.Label} -->
-<div id="dialogDeleteCheck" class="modal fade bs-modal-sm" tabindex="-2" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">删除${table.Label}</h4>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-xs-12">
-                        ${table.Label}删除后无法恢复。<br/>
-                        <br/>确定删除吗？
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">取  消</button>
-                <button id="ok" type="button" class="btn btn-primary" data-loading-text="正在删除...">确  定</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
 
 <script language="JavaScript">
     var datatable;
@@ -131,7 +106,6 @@ layout("/layouts/private.html"){
             datatable.ajax.reload();
         });
     }
-    var selected = [];
     function del(id) {
         var dialog = $("#dialogDelete");
         dialog.modal("show");
@@ -158,10 +132,10 @@ layout("/layouts/private.html"){
             $.each(datatable.rows('.selected').data(), function (i, n) {
                 ids.push(n.id);
             });
-            var dialog = $("#dialogDeleteCheck");
+            var dialog = $("#dialogDelete");
             dialog.modal("show");
-            dialog.find("#ok").unbind("click");
-            dialog.find("#ok").bind("click", function (event) {
+            dialog.find("#okDel").unbind("click");
+            dialog.find("#okDel").bind("click", function (event) {
                 var btn = $(this);
                 btn.button("loading");
                 $.post("$base${table.UriPrefix}/delete", {ids: ids.toString()}, function (data) {

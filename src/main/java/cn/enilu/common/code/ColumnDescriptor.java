@@ -2,11 +2,6 @@ package cn.enilu.common.code;
 
 import com.google.common.base.CaseFormat;
 import com.google.common.base.Joiner;
-import com.google.common.collect.Lists;
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotEmpty;
-import org.hibernate.validator.constraints.URL;
 import org.nutz.lang.Strings;
 
 import javax.validation.constraints.Max;
@@ -20,6 +15,11 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * 属性（数据库列）基本信息描述<br>
+ * 作者: zhangtao <br>
+ * 创建日期: 16-7-5<br>
+ */
 public class ColumnDescriptor {
 	private static Map<String, Class<?>> typeMapping = new HashMap<String,Class<?>>();
 
@@ -45,11 +45,7 @@ public class ColumnDescriptor {
 	static {
 		validationRules.put("pattern",
 				javax.validation.constraints.Pattern.class);
-		validationRules.put("email", Email.class);
-		validationRules.put("url", URL.class);
-		validationRules.put("length", Length.class);
 		validationRules.put("notnull", NotNull.class);
-		validationRules.put("notempty", NotEmpty.class);
 		validationRules.put("min", Min.class);
 		validationRules.put("max", Max.class);
 	}
@@ -57,6 +53,7 @@ public class ColumnDescriptor {
 	private static Map<String, String> labelMapping = new HashMap<String,String>();
 
 	static {
+
 		labelMapping.put("id", "ID");
 		labelMapping.put("created_at", "创建时间");
 		labelMapping.put("updated_at", "更新时间");
@@ -344,7 +341,7 @@ public class ColumnDescriptor {
 	}
 
 	public String getValidationFormClass() {
-		List<String> result = Lists.newArrayList();
+		List<String> result = new ArrayList<String>();
 		for (Validation v : getValidations()) {
 			if (v.klass == NotNull.class) {
 				result.add("required");

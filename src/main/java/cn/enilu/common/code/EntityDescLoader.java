@@ -1,18 +1,15 @@
 package cn.enilu.common.code;
 
-import com.google.common.collect.Maps;
-
 import org.nutz.dao.entity.annotation.*;
-
 import org.nutz.lang.Files;
 import org.nutz.lang.Mirror;
 import org.nutz.lang.Strings;
-
 import java.io.File;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.net.URLDecoder;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -30,7 +27,7 @@ public class EntityDescLoader extends  Loader {
         String   path = Loader.class.getClassLoader().getResource(filePath).getPath();
         String abstractPath = URLDecoder.decode(path, "utf8");
         File[] files = Files.lsFile(abstractPath, null);
-        Map<String, TableDescriptor> tables = Maps.newHashMap();
+        Map<String, TableDescriptor> tables = new HashMap<String, TableDescriptor>();
 
         for(File file:files){
             String fileName = file.getName().split("\\.")[0];
@@ -41,15 +38,15 @@ public class EntityDescLoader extends  Loader {
             }
 
             Mirror mirror = Mirror.me(modelClass);
-             Comment comment = (Comment) mirror.getAnnotation(Comment.class);
-            String commentStr = fileName;
-            if(comment!=null) {
-                  commentStr = comment.value();
-            }
             Table tableAnno = (Table) mirror.getAnnotation(Table.class);
             String tableName = tableAnno.value();
             TableDescriptor table = new TableDescriptor(tableName,basePackageName,baseUri,servPackageName,modPackageName);
-            table.setLabel(commentStr);
+
+            Comment comment = (Comment) mirror.getAnnotation(Comment.class);
+            if(comment!=null) {
+                table.setLabel(comment.value());
+            }
+
             tables.put(tableName, table);
             Field[] fields = mirror.getFields();
             mirror.getFields();

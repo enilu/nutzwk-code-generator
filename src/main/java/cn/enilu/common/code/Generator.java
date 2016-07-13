@@ -2,17 +2,15 @@ package cn.enilu.common.code;
 
 import com.google.common.base.CaseFormat;
 import com.google.common.base.Charsets;
-import com.google.common.collect.Maps;
 import com.google.common.io.Files;
 import com.google.common.io.Resources;
 import org.apache.commons.cli.*;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import org.nutz.dao.Dao;
-import org.nutz.dao.Sqls;
+
 import org.nutz.dao.impl.NutDao;
-import org.nutz.dao.sql.Sql;
-import org.nutz.dao.sql.SqlCallback;
+
 import org.nutz.ioc.Ioc;
 import org.nutz.ioc.impl.NutIoc;
 import org.nutz.ioc.loader.json.JsonLoader;
@@ -22,17 +20,16 @@ import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.util.ArrayList;
+
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-
+/**
+ * 入口类<br>
+ * 作者: zhangtao <br>
+ * 创建日期: 16-7-5<br>
+ */
 public class Generator {
 	private final Map<String, TableDescriptor> tables;
 	private final TableDescriptor table;

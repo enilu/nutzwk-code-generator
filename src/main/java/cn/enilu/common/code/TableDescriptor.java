@@ -2,9 +2,8 @@ package cn.enilu.common.code;
 
 import com.google.common.base.CaseFormat;
 import com.google.common.base.Joiner;
-import com.google.common.base.Strings;
-import com.google.common.collect.Lists;
 import org.atteo.evo.inflector.English;
+import org.nutz.lang.Strings;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -13,7 +12,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+/**
+ * 实体（表）基本信息描述类<br>
+ * 作者: zhangtao <br>
+ * 创建日期: 16-7-10<br>
+ */
 public class TableDescriptor {
 	private final String basePackageName;
 	private final String baseUri;
@@ -22,7 +25,7 @@ public class TableDescriptor {
 	public final String name;
 	private String pkType;
 	private String comment;
-	private String label;
+	private String label="项";
 	private String serPackageName;
 	private String modPackageName;
 
@@ -239,7 +242,7 @@ public class TableDescriptor {
 		List<ColumnDescriptor> result = new ArrayList<ColumnDescriptor>();
 
 		for (ColumnDescriptor column : columns) {
-			if (!Strings.isNullOrEmpty(column.getQueryOperator())) {
+			if (!Strings.isBlank(column.getQueryOperator())) {
 				result.add(column);
 			}
 		}
@@ -282,10 +285,10 @@ public class TableDescriptor {
 	}
 
 	public List<ColumnDescriptor> getIndexColumns() {
-		List<ColumnDescriptor> result = Lists.newArrayList();
+		List<ColumnDescriptor> result = new ArrayList<ColumnDescriptor>();
 
 		for (ColumnDescriptor column : columns) {
-			if (!Strings.isNullOrEmpty(column.getLabel())
+			if (!Strings.isBlank(column.getLabel())
 					|| "created_at".equals(column.columnName)) {
 				result.add(column);
 			}

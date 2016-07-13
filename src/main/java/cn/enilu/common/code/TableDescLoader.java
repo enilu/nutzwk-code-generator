@@ -1,6 +1,5 @@
 package cn.enilu.common.code;
 
-import com.google.common.collect.Maps;
 import org.nutz.dao.Dao;
 import org.nutz.dao.Sqls;
 import org.nutz.dao.impl.NutDao;
@@ -22,7 +21,6 @@ import java.util.Map;
 
 /**
  * 根据数据库结构生成model,service,controller,views<br>
- * </p> Copyright by easecredit.com<br>
  * 作者: zhangtao <br>
  * 创建日期: 16-7-10<br>
  */
@@ -80,7 +78,7 @@ public class TableDescLoader extends Loader{
 
         List<Map> columns =tableSchemaSql.getList(Map.class);
 
-        Map<String, TableDescriptor> tables = Maps.newHashMap();
+        Map<String, TableDescriptor> tables = new HashMap<String, TableDescriptor>();
         for (Map<String, Object> columnInfo : columns) {
             String tableName = (String) columnInfo.get("TABLE_NAME");
 
