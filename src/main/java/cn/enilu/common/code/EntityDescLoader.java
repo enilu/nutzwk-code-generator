@@ -1,6 +1,7 @@
 package cn.enilu.common.code;
 
 import org.nutz.dao.entity.annotation.*;
+import org.nutz.ioc.Ioc;
 import org.nutz.lang.Files;
 import org.nutz.lang.Mirror;
 import org.nutz.lang.Strings;
@@ -20,7 +21,7 @@ import java.util.Map;
  */
 public class EntityDescLoader extends  Loader {
     @Override
-    public Map<String, TableDescriptor> loadTables(String configPath, String basePackageName, String baseUri, String servPackageName, String modPackageName) throws Exception {
+    public Map<String, TableDescriptor> loadTables(Ioc ioc, String basePackageName, String baseUri, String servPackageName, String modPackageName) throws Exception {
         String packageName = basePackageName+"."+modPackageName;
 
         String filePath = packageName.replaceAll("\\.","\\/");
@@ -32,24 +33,23 @@ public class EntityDescLoader extends  Loader {
         for(File file:files){
             String fileName = file.getName().split("\\.")[0];
             String className = packageName+"."+fileName;
-            Class modelClass = Class.forName(className);
+            Class<?> modelClass = Class.forName(className);
             if(className.contains(".Model")){
                 continue;
             }
 
-            Mirror mirror = Mirror.me(modelClass);
-            Table tableAnno = (Table) mirror.getAnnotation(Table.class);
+            Mirror<?> mirror = Mirror.me(modelClass);
+            Table tableAnno =   mirror.getAnnotation(Table.class);
             String tableName = tableAnno.value();
             TableDescriptor table = new TableDescriptor(tableName,basePackageName,baseUri,servPackageName,modPackageName);
 
-            Comment comment = (Comment) mirror.getAnnotation(Comment.class);
+            Comment comment =  mirror.getAnnotation(Comment.class);
             if(comment!=null) {
                 table.setLabel(comment.value());
             }
 
             tables.put(tableName, table);
             Field[] fields = mirror.getFields();
-            mirror.getFields();
             for(Field field:fields){
                 ColumnDescriptor column = new ColumnDescriptor();
                 String fieldName = field.getName();

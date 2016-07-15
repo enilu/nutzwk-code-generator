@@ -28,11 +28,10 @@ public class TableDescLoader extends Loader{
 
 
     @Override
-    public   Map<String, TableDescriptor> loadTables(String configPath,
+    public   Map<String, TableDescriptor> loadTables(Ioc ioc,
                                                      String basePackageName, String baseUri,String servPackageName,String modPackageName) throws SQLException {
 
 
-        Ioc ioc = new NutIoc(new JsonLoader(configPath));
         DataSource ds = ioc.get(DataSource.class);
         Dao dao = new NutDao(ds);
         Sql sql = Sqls.create("select database()");

@@ -1,5 +1,7 @@
 package cn.enilu.common.code;
 
+import org.nutz.ioc.Ioc;
+
 import java.util.Map;
 
 /**
@@ -9,7 +11,7 @@ import java.util.Map;
  */
 public abstract class Loader {
 
-    public abstract Map<String, TableDescriptor> loadTables(String configPath,
+    public abstract Map<String, TableDescriptor> loadTables(Ioc ioc,
                                                    String basePackageName, String baseUri,String servPackageName,String modPackageName) throws Exception;
 
 

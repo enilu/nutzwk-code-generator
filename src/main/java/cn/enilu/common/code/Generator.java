@@ -74,9 +74,7 @@ public class Generator {
 	public static void main(String[] args) throws Exception {
 
 		String configPath = "/code/code.json";
-		Ioc ioc = new NutIoc(new JsonLoader(configPath));
-		DataSource ds = ioc.get(DataSource.class);
-		Dao dao = new NutDao(ds);
+
 
 		Pattern includePattern = Pattern.compile(".*");
 		Pattern excludePattern = null;
@@ -151,9 +149,9 @@ public class Generator {
 		} catch (Exception e) {
 			usage(options);
 		}
-
+		Ioc ioc = new NutIoc(new JsonLoader(configPath));
 		Loader loader = ioc.get(Loader.class,"loader");
-		Map<String, TableDescriptor> tables = loader.loadTables(configPath, basePackageName,
+		Map<String, TableDescriptor> tables = loader.loadTables(ioc, basePackageName,
 				baseUri,servicePackageName,modelPackageName);
 
 		for (Map.Entry<String, TableDescriptor> entry : tables.entrySet()) {
