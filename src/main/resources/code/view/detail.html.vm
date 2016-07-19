@@ -4,40 +4,28 @@ layout("/layouts/private.html"){
 #set($obj = '${obj.')
 #set($obj_id='${obj.id}')
 #set($base = '${base}')
-<header class="header navbar bg-white shadow">
-    <div class="btn-group tool-button">
-        <a class="btn btn-primary navbar-btn" href="$base${table.UriPrefix}" id="goback" data-pjax><i class="ti-angle-left"></i> 返回</a>
-    </div>
-</header>
+<section class="content-wrap bg-white">
+    <header class="header navbar bg-white shadow">
+        <div class="btn-group tool-button">
+            <a class="btn btn-primary navbar-btn" href="$base${table.UriPrefix}" id="goback" data-pjax><i class="ti-angle-left"></i> 返回</a>
+            <a class="btn btn-info navbar-btn" href="$base${table.UriPrefix}/edit/${obj.id}"  id="edit" data-pjax> 修改</a>
+        </div>
+    </header>
 
-<div class="content-wrap">
-    <div class="wrapper" style="min-height:500px;">
-        <section class="panel panel-form">
-            <form id="detailForm" role="form" class="form-horizontal parsley-form" data-parsley-validate>
-                <input name="id" type="hidden" value="$obj_id">
-                <div class="row mb10">
-                    <div class="col-lg-12">
+    <div class=panel-body style="padding-top: 56px;">
+        <div class="table-responsive no-border">
+            <input id="unitid" type="hidden">
+            <table class="table table-bordered table-striped mg-t datatable">
+                <tbody>
 #foreach ($column in $table.LabeledColumns)
-                            <div class="form-group">
-                                <label for="${column.FieldName}" class="col-sm-2 control-label">${column.label}</label>
-#if ($column.isBoolean())
-                                    <div class="col-sm-8">
-                                        <input type="text" id="${column.FieldName}" class="form-control" name="${column.FieldName}" data-parsley-required="true"
-                                               placeholder="${column.Label}" value="$obj${column.fieldName}}" >
-                                    </div>
-#else
-                                    <div class="col-sm-8">
-                                        <input type="text" id="${column.FieldName}" class="form-control" name="${column.FieldName}" data-parsley-required="true"
-                                               placeholder="${column.Label}" value="$obj${column.fieldName}}" >
-                                    </div>
+                <tr>
+                    <td>${column.label}</td><td>$obj${column.fieldName}}</td>
+                </tr>
 #end
-                            </div>
-#end
-                    </div>
-                </div>
+                </tbody>
 
-            </form>
-        </section>
+            </table>
+        </div>
     </div>
-</div>
+</section>
 <%}%>
