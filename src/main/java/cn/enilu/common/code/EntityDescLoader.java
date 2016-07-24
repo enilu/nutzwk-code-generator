@@ -40,7 +40,11 @@ public class EntityDescLoader extends  Loader {
 
             Mirror<?> mirror = Mirror.me(modelClass);
             Table tableAnno =   mirror.getAnnotation(Table.class);
+            if(tableAnno==null){
+                continue;
+            }
             String tableName = tableAnno.value();
+            String entityName = modelClass.getSimpleName();
             TableDescriptor table = new TableDescriptor(tableName,basePackageName,baseUri,servPackageName,modPackageName);
 
             Comment comment =  mirror.getAnnotation(Comment.class);
@@ -49,6 +53,7 @@ public class EntityDescLoader extends  Loader {
             }
 
             tables.put(tableName, table);
+            tables.put(entityName,table);
             Field[] fields = mirror.getFields();
             for(Field field:fields){
                 ColumnDescriptor column = new ColumnDescriptor();
