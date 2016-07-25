@@ -19,7 +19,14 @@
         <mysql-driver-version>5.1.39</mysql-driver-version>
         <commons-cli-version>1.2</commons-cli-version>
     </properties>
-
+    <developers>
+        <developer>
+            <id>enilu</id>
+            <name>enilu</name>
+            <email>eniluzt@qq.com</email>
+            <url>http://www.enilu.cn</url>
+        </developer>
+    </developers>
     <dependencies>
         <!--代码生成单独需要的依赖-->
         <dependency>
@@ -77,22 +84,17 @@
             <version>${nutz-version}</version>
         </dependency>
     </dependencies>
+    <distributionManagement>
+        <snapshotRepository>
+            <id>nexus-snapshots</id>
+            <name>Sonatype Nexus snapshot repository</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
 
-    <!--<build>-->
-    <!--<plugins>-->
-
-        <!--<plugin>-->
-            <!--<groupId>org.apache.maven.plugins</groupId>-->
-            <!--<artifactId>maven-compiler-plugin</artifactId>-->
-            <!--<version>3.5.1</version>-->
-            <!--<configuration>-->
-                <!--<encoding>${project.build.sourceEncoding}</encoding>-->
-                <!--<source>${java-version}</source>-->
-                <!--<target>${java-version}</target>-->
-                <!--<compilerArgument>-Xlint:unchecked</compilerArgument>-->
-
-            <!--</configuration>-->
-        <!--</plugin>-->
-        <!--</plugins>-->
-    <!--</build>-->
+        <repository>
+            <id>nexus-releases</id>
+            <name>Sonatype Nexus release repository</name>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+        </repository>
+    </distributionManagement>
 </project>

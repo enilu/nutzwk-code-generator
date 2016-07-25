@@ -87,7 +87,7 @@ public class Generator {
 		boolean force = false;
 		String baseUri = "/";
 		String types[] = { "all" };
-
+		String pages[] = {"index","add","edit","detail"};
 		Options options = new Options();
 		options.addOption("c", "config", true, "spring datasource config file(classpath)");
 		options.addOption("i", "include", true, "include table pattern");
@@ -96,6 +96,7 @@ public class Generator {
 		options.addOption("ctr", "package", true, "controller base package name,default:${package}/controllers");
 		options.addOption("mod", "package", true, "model base package name,default:${package}/models");
 		options.addOption("sev", "package", true, "service base package name,default:${package}/services");
+		options.addOption("v", "views", true, "for generator pages,default:all pages");
 		options.addOption("o", "output", true, "output directory, default is "
 				+ outputDir);
 		options.addOption("u", "base-uri", true,
@@ -137,6 +138,10 @@ public class Generator {
 			}
 			if (commandLine.hasOption("u")) {
 				baseUri = commandLine.getOptionValue("u");
+			}
+			if(commandLine.hasOption("v")){
+				String pagestr = commandLine.getOptionValue("v");
+				pages = pagestr.split("_");
 			}
 			force = commandLine.hasOption("f");
 			if (commandLine.hasOption("h")) {
@@ -184,7 +189,7 @@ public class Generator {
 					continue;
 				}
 				if (type.equals("view")) {
-					generateViews(force, table, generator);
+					generateViews(force, table, generator,pages);
 				} else {
 					if(loader instanceof  EntityDescLoader &&type.equals("model")){
 						continue;
@@ -220,8 +225,9 @@ public class Generator {
 	}
 
 	private static void generateViews(boolean force, TableDescriptor table,
-									  Generator generator) throws IOException {
-		for (String view : new String[] { "index", "add", "edit", "detail" }) {
+									  Generator generator,String[] pages) throws IOException {
+
+		for (String view : pages) {
 			String templatePath = "code/view/" + view + ".html.vm";
 			File file = new File("src/main/webapp/WEB-INF/views"
 					+ table.getUriPrefix() + "/" + view
