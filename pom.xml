@@ -5,7 +5,7 @@
     <artifactId>nutzwk-code-generator</artifactId>
     <packaging>jar</packaging>
     <name>nutzwk-code-generator</name>
-    <version>1.0</version>
+    <version>1.0-SNAPSHOT</version>
     <properties>
         <java-version>1.7</java-version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
