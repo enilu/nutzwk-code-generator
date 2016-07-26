@@ -97,7 +97,7 @@
 在自己的项目中添加依赖
 
         <dependency>
-            <groupId>cn.enilu</groupId>
-            <artifactId>nutzwk-code-generator</artifactId>
-            <version>1.0</version>
+               <groupId>cn.enilu.tools</groupId>
+               <artifactId>nutzwk-code-generator</artifactId>
+               <version>1.0</version>
         </dependency>
