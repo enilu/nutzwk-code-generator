@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>cn.enilu</groupId>
+    <groupId>cn.enilu.tools</groupId>
     <artifactId>nutzwk-code-generator</artifactId>
-    <version>1.0</version>
+    <packaging>jar</packaging>
+    <name>nutzwk-code-generator</name>
+    <version>1.0-SNAPSHOT</version>
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+    </parent>
     <properties>
-        <java-version>1.8</java-version>
+        <java-version>1.7</java-version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <nutz-version>1.r.56.r3</nutz-version>
         <javax.validation-version>1.1.0.Final</javax.validation-version>
@@ -19,6 +24,16 @@
         <mysql-driver-version>5.1.39</mysql-driver-version>
         <commons-cli-version>1.2</commons-cli-version>
     </properties>
+    <issueManagement>
+        <system>Github Issue</system>
+        <url>http://github.com/enilu/nutzwk-code-generator/issues</url>
+    </issueManagement>
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
     <developers>
         <developer>
             <id>enilu</id>
@@ -27,6 +42,13 @@
             <url>http://www.enilu.cn</url>
         </developer>
     </developers>
+    <scm>
+
+        <connection>scm:git:git://github.com/enilu/nutzwk-code-generator.git</connection>
+        <developerConnection>scm:git:git://github.com/enilu/nutzwk-code-generator.git</developerConnection>
+        <url>git://github.com/enilu/nutzwk-code-generator.git</url>
+      <tag>nutzwk-code-generator-1.0</tag>
+  </scm>
     <dependencies>
         <!--代码生成单独需要的依赖-->
         <dependency>
@@ -84,6 +106,87 @@
             <version>${nutz-version}</version>
         </dependency>
     </dependencies>
+    <build>
+        <sourceDirectory>${project.basedir}/src</sourceDirectory>
+
+        <resources>
+            <resource>
+                <directory>${project.basedir}/src</directory>
+                <filtering>false</filtering>
+                <excludes>
+                    <exclude>**/*.java</exclude>
+                </excludes>
+            </resource>
+        </resources>
+        <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.5</version>
+            <configuration>
+                <source>${java-version}</source>
+                <target>${java-version}</target>
+            </configuration>
+        </plugin>
+        <!--<plugin>-->
+            <!--<groupId>org.apache.maven.plugins</groupId>-->
+            <!--<artifactId>maven-source-plugin</artifactId>-->
+            <!--<version>2.2.1</version>-->
+            <!--<executions>-->
+                <!--<execution>-->
+                    <!--<id>attach-sources</id>-->
+                    <!--<goals>-->
+                        <!--<goal>jar</goal>-->
+                    <!--</goals>-->
+                <!--</execution>-->
+            <!--</executions>-->
+        <!--</plugin>-->
+            <!--<plugin>-->
+                <!--<groupId>org.apache.maven.plugins</groupId>-->
+                <!--<artifactId>maven-javadoc-plugin</artifactId>-->
+                <!--<version>2.9.1</version>-->
+                <!--<configuration>-->
+                    <!--<quiet>true</quiet>-->
+                    <!--<nonavbar>true</nonavbar>-->
+                    <!--<notree>true</notree>-->
+                    <!--<nocomment>true</nocomment>-->
+                    <!--<nohelp>true</nohelp>-->
+                <!--</configuration>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<id>attach-javadocs</id>-->
+                        <!--<goals>-->
+                            <!--<goal>jar</goal>-->
+                        <!--</goals>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+            <!--</plugin>-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.5</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.5.3</version>
+                <configuration>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                    <preparationGoals>clean install</preparationGoals>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
     <distributionManagement>
         <snapshotRepository>
             <id>nexus-snapshots</id>
