@@ -3,3 +3,4 @@
 /target/
 *.properties
 *.pom.xml.releaseBackup
+*.xml.releaseBackup
