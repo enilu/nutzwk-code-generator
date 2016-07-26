@@ -107,11 +107,11 @@
         </dependency>
     </dependencies>
     <build>
-        <sourceDirectory>${project.basedir}/src</sourceDirectory>
+        <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
 
         <resources>
             <resource>
-                <directory>${project.basedir}/src</directory>
+                <directory>${project.basedir}/src/main/resources</directory>
                 <filtering>false</filtering>
                 <excludes>
                     <exclude>**/*.java</exclude>
