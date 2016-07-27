@@ -6,6 +6,9 @@
     <packaging>jar</packaging>
     <name>nutzwk-code-generator</name>
     <version>1.0</version>
+    <description>生成基于nutzwk https://github.com/Wizzercn/NutzWk 的代码工具 </description>
+
+    <url>https://github.com/enilu/nutzwk-code-generator</url>
     <properties>
         <java-version>1.7</java-version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
