@@ -93,7 +93,7 @@ public class Generator {
 		options.addOption("ctr", "package", true, "controller base package name,default:${package}/controllers");
 		options.addOption("mod", "package", true, "model base package name,default:${package}/models");
 		options.addOption("sev", "package", true, "service base package name,default:${package}/services");
-		options.addOption("v", "views", true, "for generator pages,default:all pages");
+		options.addOption("v", "views", true, "for generator pages,default:all pages,eg: -v index_detail will generate index.html and detail.html");
 		options.addOption("o", "output", true, "output directory, default is "
 				+ outputDir);
 		options.addOption("u", "base-uri", true,
