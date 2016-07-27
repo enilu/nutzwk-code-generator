@@ -24,8 +24,15 @@
      -u,--base-uri <arg>    base uri prefix, default is /
      -x,--exclude <arg>     exclude table pattern
 
-##举例
+## 用法
+### 在自己的项目中添加依赖
 
+        <dependency>
+               <groupId>cn.enilu.tools</groupId>
+               <artifactId>nutzwk-code-generator</artifactId>
+               <version>1.0</version>
+        </dependency>
+        
 ### 1,根据表生成相关代码
 
 - 比如使用下面语句建表：
@@ -39,7 +46,8 @@
           PRIMARY KEY (`id`)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='label:国家号';
 
-
+- 更改/code/code.json(如果没有请参考本项目中新建）loader配置为：TableDescLoader
+- 确保项目中有mysql驱动
 - 运行Generator类的时候加上如下参数：         
     
         -i dic_country -p cn.wizzer.modules.back.sys  -u /private/sys
@@ -73,7 +81,7 @@
       
 - 运行Generator类的时候加上如下参数：         
     
-        -i dic_country -p cn.wizzer.modules.back.sys  -u /private/sys
+        -i DicCountry -p cn.wizzer.modules.back.sys  -u /private/sys
 
         
 - 会生成和上图一致的代码
@@ -82,22 +90,4 @@
 ## 后续功能
 
 - 根据实体约束生成相关验证代码
-- 去掉hibernate-valid 依赖
-- 其他...
 
-
-## 用法
-
-下载项目后可以直接生成本地项目，然后在要使用的项目中添加依赖：
-
-安装到本地仓库：
-
-    mvn install
-
-在自己的项目中添加依赖
-
-        <dependency>
-               <groupId>cn.enilu.tools</groupId>
-               <artifactId>nutzwk-code-generator</artifactId>
-               <version>1.0</version>
-        </dependency>
