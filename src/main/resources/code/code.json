@@ -1,16 +1,10 @@
 {
     dataSource : {
-        type : "com.alibaba.druid.pool.DruidDataSource",
-            events : {
-            depose : 'close'
-        },
+        type : "org.nutz.dao.impl.SimpleDataSource",
         fields : {
-            driverClassName : "com.mysql.jdbc.Driver",
                 url : "jdbc:mysql://localhost:3306/nutzwk",
                 username : "root",
-                password : "root",
-                maxWait: 20000,
-                defaultAutoCommit : false
+                password : "root"
         }
     },
     loader:{

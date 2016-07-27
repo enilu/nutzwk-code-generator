@@ -1,26 +1,22 @@
 package cn.enilu.common.code;
 
-import com.google.common.base.CaseFormat;
-import com.google.common.base.Charsets;
-import com.google.common.io.Files;
-import com.google.common.io.Resources;
+
 import org.apache.commons.cli.*;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
-import org.nutz.dao.Dao;
-
-import org.nutz.dao.impl.NutDao;
 
 import org.nutz.ioc.Ioc;
 import org.nutz.ioc.impl.NutIoc;
 import org.nutz.ioc.loader.json.JsonLoader;
+import org.nutz.lang.Streams;
+import org.nutz.lang.Strings;
 
-import javax.sql.DataSource;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
-import java.net.URL;
 
+import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -48,8 +44,8 @@ public class Generator {
 
 		String code = generateCode(packageName, templatePath);
 		file.getParentFile().mkdirs();
-
-		Files.write(code.getBytes(Charsets.UTF_8), file);
+		org.nutz.lang.Files.write(file, code.getBytes(Charset.forName("utf8")));
+//		Files.write(code.getBytes(Charset.forName("utf8")), file);
 
 	}
 
@@ -59,10 +55,11 @@ public class Generator {
 		context.put("table", table);
 		context.put("packageName", packageName);
 		StringWriter writer = new StringWriter();
+		//todo
 
-		URL url = Resources.getResource(templatePath);
-		String template = Resources.toString(url, Charsets.UTF_8);
-
+//		URL url = Resources.getResource(templatePath);
+//		String template = Resources.toString(url, Charsets.UTF_8);
+		String template = new String(Streams.readBytes(ClassLoader.getSystemResourceAsStream(templatePath)),Charset.forName("utf8"));
 		VelocityEngine engine = new VelocityEngine();
 		engine.setProperty("runtime.references.strict", false);
 		engine.init();
@@ -201,8 +198,7 @@ public class Generator {
 					String className = table.getEntityClassName();
 					if (!"model".equals(type)) {
 						className = className
-								+ CaseFormat.LOWER_UNDERSCORE.to(
-								CaseFormat.UPPER_CAMEL, type);
+								+ Strings.upperFirst(type);
 					}
 					File file = new File(outputDir, packagePath + "/"
 							+ className + ".java");

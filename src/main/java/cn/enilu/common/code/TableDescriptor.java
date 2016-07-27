@@ -1,7 +1,6 @@
 package cn.enilu.common.code;
 
-import com.google.common.base.CaseFormat;
-import com.google.common.base.Joiner;
+
 import org.atteo.evo.inflector.English;
 import org.nutz.lang.Strings;
 
@@ -102,7 +101,7 @@ public class TableDescriptor {
 	}
 
 	public String getEntityClassName() {
-		return CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, name);
+		return Utils.UPPER_CAMEL(name);
 	}
 
 	public String getEntityFullClassName() {
@@ -114,7 +113,7 @@ public class TableDescriptor {
 	}
 
 	public String getEntityInstanceName() {
-		return CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, name);
+		return Utils.LOWER_CAMEL(  name);
 	}
 
 	public String getEntityInstancesName() {
@@ -183,11 +182,11 @@ public class TableDescriptor {
 		imports.add(null);
 
 		klasses.clear();
-		for (ColumnDescriptor column : columns) {
-			for (ColumnDescriptor.Validation v : column.getValidations()) {
-				klasses.add(v.klass.getName());
-			}
-		}
+//		for (ColumnDescriptor column : columns) {
+//			for (ColumnDescriptor.Validation v : column.getValidations()) {
+//				klasses.add(v.klass.getName());
+//			}
+//		}
 		if (klasses.size() > 0) {
 			imports.addAll(klasses);
 			imports.add(null);
@@ -205,25 +204,11 @@ public class TableDescriptor {
 		}
 		return result;
 	}
-
+	//todo
 	public String getToStringBody() {
 		return null;
-//		StringBuilder code = new StringBuilder();
-//		code.append("MoreObjects.toStringHelper(this)");
-//		int count = 0;
-//		for (ColumnDescriptor column : columns) {
-//			code.append(".add(\"").append(column.getFieldName()).append("\", ")
-//					.append(column.getFieldName()).append(")");
-//
-//			count++;
-//			if (count % 2 == 0) {
-//				code.append("\n\t\t\t");
-//			}
-//		}
-//		code.append(".toString()");
-//		return code.toString();
 	}
-
+	//todo
 	public String getQueryColumns(String op) {
 		List<String> result =  new ArrayList<String>();
 		for (ColumnDescriptor column : columns) {
@@ -235,7 +220,8 @@ public class TableDescriptor {
 		if (result.isEmpty()) {
 			return null;
 		}
-		return Joiner.on(", ").join(result);
+//		return Joiner.on(", ").join(result);
+		return "";
 	}
 
 	public List<ColumnDescriptor> getSearchableColumns() {
@@ -269,7 +255,6 @@ public class TableDescriptor {
 			result.add(descriptor.getFieldName());
 		}
 		return result.toArray(new String[0]);
-//		return Lists.map(columnDescriptors, "fieldName").toArray(new String[0]);
 
 	}
 	

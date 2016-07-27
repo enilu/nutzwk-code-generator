@@ -1,12 +1,7 @@
 package cn.enilu.common.code;
 
-import com.google.common.base.CaseFormat;
-import com.google.common.base.Joiner;
-import org.nutz.lang.Strings;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,15 +34,11 @@ public class ColumnDescriptor {
 		typeMapping.put("bool", boolean.class);
 		typeMapping.put("decimal", BigDecimal.class);
 	}
-
-	private static Map<String, Class<?>> validationRules = new HashMap<String,Class<?>>();
+	//todo
+//	private static Map<String, Class<?>> validationRules = new HashMap<String,Class<?>>();
 
 	static {
-		validationRules.put("pattern",
-				javax.validation.constraints.Pattern.class);
-		validationRules.put("notnull", NotNull.class);
-		validationRules.put("min", Min.class);
-		validationRules.put("max", Max.class);
+
 	}
 
 	private static Map<String, String> labelMapping = new HashMap<String,String>();
@@ -96,20 +87,7 @@ public class ColumnDescriptor {
 
 	private String queryOperator;
 
-	public List<Validation> getValidations() {
-		if (!validationBuilt) {
-			if (!containsValidation(NotNull.class)) {
-				if (!primary && defaultValue == null && !nullable) {
-					Validation validation = new Validation(NotNull.class,
-							"@NotNull");
-					validations.add(validation);
-				}
-			}
 
-			validationBuilt = true;
-		}
-		return validations;
-	}
 
 	private boolean containsValidation(Class<?> klass) {
 		for (Validation v : validations) {
@@ -152,45 +130,40 @@ public class ColumnDescriptor {
 		extractLabel(comment);
 		extractSearchable(comment);
 
-		Pattern validatePattern = Pattern.compile("validate:\\s*(.+)\\s*");
-		Matcher m = validatePattern.matcher(comment);
-		if (!m.find()) {
-			return;
-		}
-		String validateDef = m.group(1);
-		String defs[] = validateDef.split(";");
-		// validate: pattern(regexp="^\w+$", message="只能是字母数字组合")
-		Pattern defPattern = Pattern.compile("^(\\w+)(?:\\(([^\\)]*)\\))?$");
-		for (String def : defs) {
-			m = defPattern.matcher(def);
-			if (!m.find()) {
-				System.err.println("invalid validate def: " + def);
-				continue;
-			}
-
-			String rule = m.group(1).toLowerCase();
-			String params = m.group(2);
-
-			Class<?> ruleClass = validationRules.get(rule);
-			if (ruleClass == null) {
-				System.err.println("no validation rule for " + def);
-				continue;
-			}
-
-			StringBuilder code = new StringBuilder("@");
-			code.append(ruleClass.getSimpleName());
-			if (! Strings.isBlank(params)) {
-				code.append("(");
-				if (ruleClass == javax.validation.constraints.Pattern.class) {
-					params = params.replaceAll("\\\\", "\\\\\\\\");
-				}
-				// TODO, validate params
-				code.append(params);
-				code.append(")");
-			}
-			Validation validation = new Validation(ruleClass, code.toString());
-			validations.add(validation);
-		}
+//		Pattern validatePattern = Pattern.compile("validate:\\s*(.+)\\s*");
+//		Matcher m = validatePattern.matcher(comment);
+//		if (!m.find()) {
+//			return;
+//		}
+//		String validateDef = m.group(1);
+//		String defs[] = validateDef.split(";");
+//		// validate: pattern(regexp="^\w+$", message="只能是字母数字组合")
+//		Pattern defPattern = Pattern.compile("^(\\w+)(?:\\(([^\\)]*)\\))?$");
+//		for (String def : defs) {
+//			m = defPattern.matcher(def);
+//			if (!m.find()) {
+//				System.err.println("invalid validate def: " + def);
+//				continue;
+//			}
+//
+//			String rule = m.group(1).toLowerCase();
+//			String params = m.group(2);
+//
+//
+//			StringBuilder code = new StringBuilder("@");
+//			code.append(ruleClass.getSimpleName());
+//			if (! Strings.isBlank(params)) {
+//				code.append("(");
+//				if (ruleClass == javax.validation.constraints.Pattern.class) {
+//					params = params.replaceAll("\\\\", "\\\\\\\\");
+//				}
+//				// TODO, validate params
+//				code.append(params);
+//				code.append(")");
+//			}
+//			Validation validation = new Validation(ruleClass, code.toString());
+//			validations.add(validation);
+//		}
 	}
 
 	private void extractLabel(String comment) {
@@ -219,8 +192,9 @@ public class ColumnDescriptor {
 	}
 
 	public String getFieldName() {
-		return CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL,
-				columnName);
+		return  Utils.LOWER_CAMEL(columnName);
+//		return CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL,
+//				columnName);
 	}
 
 	public List<String> getEnumValues() {
@@ -283,8 +257,9 @@ public class ColumnDescriptor {
 	}
 
 	public String getUpperJavaFieldName() {
-		return CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL,
-				columnName);
+		return Utils.LOWER_CAMEL(columnName);
+//		return CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL,
+//				columnName);
 	}
 
 	public String getGetterMethodName() {
@@ -339,16 +314,9 @@ public class ColumnDescriptor {
 		}
 		return "\"" + getDefaultValue().toString() + "\"";
 	}
-
+	//TODO
 	public String getValidationFormClass() {
-		List<String> result = new ArrayList<String>();
-		for (Validation v : getValidations()) {
-			if (v.klass == NotNull.class) {
-				result.add("required");
-			}
-			// TODO
-		}
-		return Joiner.on(' ').join(result);
+		 return "";
 	}
 
 }
