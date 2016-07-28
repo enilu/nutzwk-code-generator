@@ -202,7 +202,7 @@ public class Generator {
 					}
 					File file = new File(outputDir, packagePath + "/"
 							+ className + ".java");
-
+					System.out.println("generate "+file.getName());
 					generator.generate(packageName, templatePath, file, force);
 				}
 			}
@@ -228,6 +228,7 @@ public class Generator {
 			File file = new File("src/main/webapp/WEB-INF/views"
 					+ table.getUriPrefix() + "/" + view
 					+ ".html");
+			System.out.println("generate html:"+file.getName());
 			generator.generate(null, templatePath, file, force);
 		}
 	}
