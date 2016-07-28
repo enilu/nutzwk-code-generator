@@ -3,7 +3,7 @@
 ## 特点
 - 和nutz其他代码生成器比较，主要具备的特点是代码量少.
 - 这么比貌似不厚道，因为其他生成器不仅功能强大，而且还有ui界面。
-
+- 配合IDEA插件：nutzwk-plugin（提供了gui）一起使用会更爽哦，
 ## 功能介绍
 - 自动生成nutzwk的代码，包括model、service、controller和view
 - 根据事先建立好的数据库表，生成对应的model，service，controller和view层代码
@@ -12,6 +12,7 @@
 - 模板引擎使用velocity
 
 ## 使用手册
+
 
         usage: Main [options] [all|entity|service|controller|view]
          -c,--config <arg>      spring datasource config file(classpath)
@@ -30,6 +31,7 @@
                                 detail.html
          -x,--exclude <arg>     exclude table pattern
 
+手册看花眼了吧，那就去用IDEA搜索插件[nutzwk-plugin](https://github.com/enilu/nutzwk-plugin),酱紫就不用记这些冷冰冰的命令行了
 
 ## 用法
 ### 在自己的项目中添加依赖
