@@ -187,11 +187,6 @@ public class TableDescriptor {
 		imports.add(null);
 
 		klasses.clear();
-//		for (ColumnDescriptor column : columns) {
-//			for (ColumnDescriptor.Validation v : column.getValidations()) {
-//				klasses.add(v.klass.getName());
-//			}
-//		}
 		if (klasses.size() > 0) {
 			imports.addAll(klasses);
 			imports.add(null);
@@ -210,10 +205,6 @@ public class TableDescriptor {
 		return result;
 	}
 	//todo
-	public String getToStringBody() {
-		return null;
-	}
-	//todo
 	public String getQueryColumns(String op) {
 		List<String> result =  new ArrayList<String>();
 		for (ColumnDescriptor column : columns) {
@@ -225,7 +216,6 @@ public class TableDescriptor {
 		if (result.isEmpty()) {
 			return null;
 		}
-//		return Joiner.on(", ").join(result);
 		return "";
 	}
 
@@ -279,7 +269,7 @@ public class TableDescriptor {
 
 		for (ColumnDescriptor column : columns) {
 			if (!Strings.isBlank(column.getLabel())
-					|| "created_at".equals(column.columnName)) {
+					&& !"id".equals(column.columnName)) {
 				result.add(column);
 			}
 		}

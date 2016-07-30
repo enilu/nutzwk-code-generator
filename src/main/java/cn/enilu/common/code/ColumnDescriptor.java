@@ -46,8 +46,9 @@ public class ColumnDescriptor {
 	static {
 
 		labelMapping.put("id", "ID");
-		labelMapping.put("created_at", "创建时间");
-		labelMapping.put("updated_at", "更新时间");
+		labelMapping.put("opAt", "操作时间");
+		labelMapping.put("opBy", "操作人");
+		labelMapping.put("delFlag", "删除标记");
 	}
 
 	public static class Validation {
@@ -114,7 +115,7 @@ public class ColumnDescriptor {
 		if (defaultLabel != null) {
 			return defaultLabel;
 		}
-		return columnName;
+		return label;
 	}
 
 	public String getComment() {
@@ -129,41 +130,6 @@ public class ColumnDescriptor {
 
 		extractLabel(comment);
 		extractSearchable(comment);
-
-//		Pattern validatePattern = Pattern.compile("validate:\\s*(.+)\\s*");
-//		Matcher m = validatePattern.matcher(comment);
-//		if (!m.find()) {
-//			return;
-//		}
-//		String validateDef = m.group(1);
-//		String defs[] = validateDef.split(";");
-//		// validate: pattern(regexp="^\w+$", message="只能是字母数字组合")
-//		Pattern defPattern = Pattern.compile("^(\\w+)(?:\\(([^\\)]*)\\))?$");
-//		for (String def : defs) {
-//			m = defPattern.matcher(def);
-//			if (!m.find()) {
-//				System.err.println("invalid validate def: " + def);
-//				continue;
-//			}
-//
-//			String rule = m.group(1).toLowerCase();
-//			String params = m.group(2);
-//
-//
-//			StringBuilder code = new StringBuilder("@");
-//			code.append(ruleClass.getSimpleName());
-//			if (! Strings.isBlank(params)) {
-//				code.append("(");
-//				if (ruleClass == javax.validation.constraints.Pattern.class) {
-//					params = params.replaceAll("\\\\", "\\\\\\\\");
-//				}
-//				// TODO, validate params
-//				code.append(params);
-//				code.append(")");
-//			}
-//			Validation validation = new Validation(ruleClass, code.toString());
-//			validations.add(validation);
-//		}
 	}
 
 	private void extractLabel(String comment) {
@@ -193,8 +159,6 @@ public class ColumnDescriptor {
 
 	public String getFieldName() {
 		return  Utils.LOWER_CAMEL(columnName);
-//		return CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL,
-//				columnName);
 	}
 
 	public List<String> getEnumValues() {

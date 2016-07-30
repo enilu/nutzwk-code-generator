@@ -50,6 +50,8 @@ public class EntityDescLoader extends  Loader {
             Comment comment =  mirror.getAnnotation(Comment.class);
             if(comment!=null) {
                 table.setLabel(comment.value());
+            }else{
+                table.setLabel(entityName);
             }
 
             tables.put(tableName, table);
@@ -69,6 +71,7 @@ public class EntityDescLoader extends  Loader {
                     if(annotation instanceof  Id||annotation instanceof Name){
                         column.primary=true;
                         table.setPkType(column.getSimpleJavaTypeName());
+                        column.columnName =fieldName;
                     }
                     if(annotation instanceof ColDefine){
                         ColType colType = ((ColDefine) annotation).type();
@@ -85,6 +88,9 @@ public class EntityDescLoader extends  Loader {
                     }
 
 
+                }
+                if(Strings.isEmpty(column.getLabel())){
+                    column.setLabel(fieldName);
                 }
                 table.addColumn(column);
             }
