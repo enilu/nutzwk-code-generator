@@ -1,31 +1,31 @@
-<%
-layout("/layouts/private.html"){
-%>
 #set($obj = '${obj.')
 #set($obj_id='${obj.id}')
 #set($base = '${base}')
-<section class="content-wrap bg-white">
-    <header class="header navbar bg-white shadow">
-        <div class="btn-group tool-button">
-            <a class="btn btn-primary navbar-btn" href="$base${table.UriPrefix}" id="goback" data-pjax><i class="ti-angle-left"></i> 返回</a>
-            <a class="btn btn-info navbar-btn" href="$base${table.UriPrefix}/edit/${obj.id}"  id="edit" data-pjax> 修改</a>
-        </div>
-    </header>
-
-    <div class=panel-body style="padding-top: 56px;">
-        <div class="table-responsive no-border">
-            <input id="unitid" type="hidden">
-            <table class="table table-bordered table-striped mg-t datatable">
-                <tbody>
-#foreach ($column in $table.LabeledColumns)
-                <tr>
-                    <td>${column.label}</td><td>$obj${column.fieldName}}</td>
-                </tr>
-#end
-                </tbody>
-
-            </table>
+<div class="modal-body no-p">
+    <div class="row">
+        <div class="col-xs-12">
+            <section class="panel panel-primary no-b">
+                <header class="panel-heading clearfix brtl brtr">
+                    <div class="overflow-hidden">
+                        <a href="javascript:;" class="h4 show no-m pt5">${table.label}</a>
+                        <small>${obj_id}</small>
+                    </div>
+                </header>
+                <div class="list-group">
+                    <table class="table table-bordered table-striped mg-t datatable">
+                        <tbody>
+                            #foreach ($column in $table.LabeledColumns)
+                            <tr>
+                                <td>${column.label}</td><td>$obj${column.fieldName}}</td>
+                            </tr>
+                            #end
+                        </tbody>
+                    </table>
+                </div>
+            </section>
         </div>
     </div>
-</section>
-<%}%>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary btn-block" data-dismiss="modal">知道了</button>
+</div>
