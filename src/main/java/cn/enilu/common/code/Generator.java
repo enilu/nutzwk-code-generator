@@ -8,6 +8,7 @@ import org.apache.velocity.app.VelocityEngine;
 import org.nutz.ioc.Ioc;
 import org.nutz.ioc.impl.NutIoc;
 import org.nutz.ioc.loader.json.JsonLoader;
+import org.nutz.lang.Files;
 import org.nutz.lang.Streams;
 import org.nutz.lang.Strings;
 
@@ -44,8 +45,7 @@ public class Generator {
 
 		String code = generateCode(packageName, templatePath);
 		file.getParentFile().mkdirs();
-		org.nutz.lang.Files.write(file, code.getBytes(Charset.forName("utf8")));
-//		Files.write(code.getBytes(Charset.forName("utf8")), file);
+		Files.write(file, code.getBytes(Charset.forName("utf8")));
 
 	}
 
@@ -57,8 +57,6 @@ public class Generator {
 		StringWriter writer = new StringWriter();
 		//todo
 
-//		URL url = Resources.getResource(templatePath);
-//		String template = Resources.toString(url, Charsets.UTF_8);
 		String template = new String(Streams.readBytes(ClassLoader.getSystemResourceAsStream(templatePath)),Charset.forName("utf8"));
 		VelocityEngine engine = new VelocityEngine();
 		engine.setProperty("runtime.references.strict", false);
@@ -91,7 +89,7 @@ public class Generator {
 		options.addOption("x", "exclude", true, "exclude table pattern");
 		options.addOption("p", "package", true, "base package name,default:cn.wizzer.modules");
 		options.addOption("ctr", "package", true, "controller base package name,default:${package}/controllers");
-		options.addOption("mod", "package", true, "model base package name,default:${package}/models");
+		options.addOption("mod", "package", true, "model base package name,default:${package}/cn.enilu.sys.models");
 		options.addOption("sev", "package", true, "service base package name,default:${package}/services");
 		options.addOption("v", "views", true, "for generator pages,default:all pages,eg: -v index_detail will generate index.html and detail.html");
 		options.addOption("o", "output", true, "output directory, default is "
@@ -197,7 +195,7 @@ public class Generator {
 					String packagePath = packageName.replace('.', '/');
 					String className = table.getEntityClassName();
 					if (!"model".equals(type)) {
-						className = className
+						className = Utils.UPPER_CAMEL(className)
 								+ Strings.upperFirst(type);
 					}
 					File file = new File(outputDir, packagePath + "/"

@@ -21,16 +21,18 @@ public class TableDescriptor {
 	private final String baseUri;
 	private final List<ColumnDescriptor> columns = new ArrayList<ColumnDescriptor>();
 	
-	public final String name;
-	private String pkType;
-	private String comment;
+	public final String name;//表名称
+	private String entityName;//实体类名称
+	private String pkType;//主键类型
+	private String comment;//注释
 	private String label="项";
-	private String serPackageName;
-	private String modPackageName;
+	private String serPackageName;//service包名
+	private String modPackageName;//models包名
 
 
-	public TableDescriptor(String name, String basePackageName, String baseUri,String serPackageName,String modPackageName) {
+	public TableDescriptor(String name, String entityName,String basePackageName, String baseUri,String serPackageName,String modPackageName) {
 		this.name = name;
+		this.entityName = entityName;
 		this.basePackageName = basePackageName;
 		this.serPackageName = serPackageName;
 		this.modPackageName = modPackageName;
@@ -101,7 +103,10 @@ public class TableDescriptor {
 	}
 
 	public String getEntityClassName() {
-		return Utils.UPPER_CAMEL(name);
+		if(Strings.isBlank(entityName)){
+			return Utils.UPPER_CAMEL(name);
+		}
+		return entityName;
 	}
 
 	public String getEntityFullClassName() {
@@ -125,11 +130,11 @@ public class TableDescriptor {
 	}
 
 	public String getServiceClassName() {
-		return getEntityClassName() + "Service";
+		return Utils.UPPER_CAMEL(getEntityClassName()) + "Service";
 	}
 
 	public String getControllerClassName() {
-		return getEntityClassName() + "Controller";
+		return Utils.UPPER_CAMEL(getEntityClassName()) + "Controller";
 	}
 
 	public void addPrimaryKeyColumn(String columnName) {

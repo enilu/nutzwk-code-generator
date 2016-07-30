@@ -45,7 +45,7 @@ public class EntityDescLoader extends  Loader {
             }
             String tableName = tableAnno.value();
             String entityName = modelClass.getSimpleName();
-            TableDescriptor table = new TableDescriptor(tableName,basePackageName,baseUri,servPackageName,modPackageName);
+            TableDescriptor table = new TableDescriptor(tableName,entityName,basePackageName,baseUri,servPackageName,modPackageName);
 
             Comment comment =  mirror.getAnnotation(Comment.class);
             if(comment!=null) {

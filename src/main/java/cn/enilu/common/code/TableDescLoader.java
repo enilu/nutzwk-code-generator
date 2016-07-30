@@ -97,7 +97,7 @@ public class TableDescLoader extends Loader{
 
             TableDescriptor table = tables.get(tableName);
             if (table == null) {
-                table = new TableDescriptor(tableName, basePackageName, baseUri,servPackageName,modPackageName);
+                table = new TableDescriptor(tableName,null, basePackageName, baseUri,servPackageName,modPackageName);
                 tables.put(tableName, table);
             }
             if(column.primary){

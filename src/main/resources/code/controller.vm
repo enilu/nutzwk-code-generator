@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 #set($parameterId = '${args[0].id}')
-#set($parameterId2 = '${args[0]}')
+#set($parameterId2 = "${args[2].getAttribute('id')}")
 @IocBean
 @At("${table.UriPrefix}")
 @Filters({@By(type = PrivateFilter.class)})
@@ -54,7 +54,7 @@ public class ${table.ControllerClassName} {
 
     @At
     @Ok("json")
-    @SLog(tag = "新建记录", msg = "")
+    @SLog(tag = "新建${table.Label}", msg = "")
     public Object addDo(@Param("..") ${table.EntityClassName} ${table.EntityInstanceName}, HttpServletRequest req) {
 		try {
 			${table.ServiceInstanceName}.insert(${table.EntityInstanceName});
@@ -73,7 +73,7 @@ public class ${table.ControllerClassName} {
 
     @At
     @Ok("json")
-    @SLog(tag = "修改记录", msg = "ID:$parameterId")
+    @SLog(tag = "修改${table.Label}", msg = "ID:$parameterId")
     public Object editDo(@Param("..") ${table.EntityClassName} ${table.EntityInstanceName}, HttpServletRequest req) {
 		try {
 
@@ -89,12 +89,14 @@ public class ${table.ControllerClassName} {
     @At({"/delete","/delete/?"})
     @Ok("json")
     @SLog(tag = "删除${table.Label}", msg = "ID:$parameterId2")
-    public Object delete(${table.pkType} id, @Param("ids") ${table.pkType}[] ids ,HttpServletRequest req) {
+    public Object delete(${table.pkType} oneId, @Param("ids") ${table.pkType}[] ids ,HttpServletRequest req) {
 		try {
 			if(ids!=null&&ids.length>0){
 				${table.ServiceInstanceName}.delete(ids);
+    			req.setAttribute("id", org.apache.shiro.util.StringUtils.toString(ids));
 			}else{
-				${table.ServiceInstanceName}.delete(id);
+				${table.ServiceInstanceName}.delete(oneId);
+    			req.setAttribute("id", oneId);
 			}
 			return Result.success("system.success");
 		} catch (Exception e) {
