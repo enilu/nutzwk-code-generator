@@ -2,6 +2,8 @@ package cn.enilu.common.code;
 
 
 
+import org.nutz.lang.Strings;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -80,6 +82,7 @@ public class ColumnDescriptor {
 	public boolean nullable;
 	private Object defaultValue;
 	private String comment;
+	private  String fieldName;
 
 	private List<String> enumValues = new ArrayList<String>();
 
@@ -158,7 +161,13 @@ public class ColumnDescriptor {
 	}
 
 	public String getFieldName() {
-		return  Utils.LOWER_CAMEL(columnName);
+		if(Strings.isBlank(fieldName)){
+			return Utils.LOWER_CAMEL(columnName);
+		}
+		return fieldName;
+	}
+	public void setFieldName(String fieldName){
+		this.fieldName = fieldName;
 	}
 
 	public List<String> getEnumValues() {

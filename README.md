@@ -40,7 +40,8 @@
         <dependency>
                <groupId>cn.enilu.tools</groupId>
                <artifactId>nutzwk-code-generator</artifactId>
-               <version>1.0</version>
+               <version>1.0
+               </version>
         </dependency>
 ```        
 ### 1,根据表生成相关代码

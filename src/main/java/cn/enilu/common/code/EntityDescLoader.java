@@ -63,6 +63,7 @@ public class EntityDescLoader extends  Loader {
                 if(fieldName.equals("opBy")||fieldName.equals("opAt")||fieldName.equals("delFlag")){
                     continue;
                 }
+                column.setFieldName(fieldName);
                 Annotation[] annotations = field.getAnnotations();
                 for(Annotation annotation :annotations){
                     if(annotation instanceof  Comment){
