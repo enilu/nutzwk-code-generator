@@ -1,12 +1,18 @@
 {
-    dataSource : {
-        type : "org.nutz.dao.impl.SimpleDataSource",
-        fields : {
-                url : "jdbc:mysql://localhost:3306/nutzwk",
-                username : "root",
-                password : "root"
-        }
+  dataSource : {
+    type : "com.alibaba.druid.pool.DruidDataSource",
+    events : {
+      depose : 'close'
     },
+    fields : {
+      driverClassName : "com.mysql.jdbc.Driver",
+      url : "jdbc:mysql://localhost:3306/nutzwk",
+      username : "root",
+      password : "root",
+      maxWait: 20000,
+      defaultAutoCommit : false
+    }
+  },
     loader:{
         //根据实体生成代码
         type:'cn.enilu.common.code.EntityDescLoader'

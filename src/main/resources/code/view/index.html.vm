@@ -16,7 +16,7 @@ layout("/layouts/private.html"){
             <table class="table table-bordered table-striped mg-t datatable">
                 <thead>
                     <tr>
-#foreach ($column in $table.IndexColumns)
+#foreach ($column in $table.LabeledColumns)
                             <th>${column.Label}</th>
 #end
                             <th>操作</th>
@@ -80,11 +80,10 @@ layout("/layouts/private.html"){
                     d.unitid = $('#unitid').val();
                 }
             },
-#foreach ($column in $table.IndexColumns)
-            "order": [[$foreach.index, "desc"]],
-#end
+            //默认排序列
+//            "order": [[0, "desc"]],
             "columns": [
-#foreach ($column in $table.IndexColumns)
+#foreach ($column in $table.LabeledColumns)
 #set($columSize=$columSize+1)
                     {"data": "${column.fieldName}", "bSortable": true},
 #end

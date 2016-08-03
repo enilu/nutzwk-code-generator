@@ -235,11 +235,10 @@ public class TableDescriptor {
 		List<ColumnDescriptor> result = new ArrayList<ColumnDescriptor>();
 
 		for (ColumnDescriptor column : columns) {
-			if (column.hasLabel() && !column.primary) {
+			if (column.getComment()!=null&&!column.primary) {
 				result.add(column);
 			}
 		}
-
 		return result;
 	}
 	
@@ -291,15 +290,6 @@ public class TableDescriptor {
 
 	public void setComment(String comment) {
 		this.comment = comment;
-		if (comment == null) {
-			return;
-		}
-
-		Pattern labelPattern = Pattern.compile("label:\\s*([^,;，]+)");
-		Matcher m = labelPattern.matcher(comment);
-		if (m.find()) {
-			this.label = m.group(1);
-		}
 	}
 
 }
