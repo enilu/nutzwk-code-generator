@@ -12,7 +12,6 @@ layout("/layouts/private.html"){
     </header>
     <div class=panel-body style="padding-top: 50px;">
         <div class="table-responsive no-border">
-            <input id="unitid" type="hidden">
             <table class="table table-bordered table-striped mg-t datatable">
                 <thead>
                     <tr>
@@ -77,7 +76,7 @@ layout("/layouts/private.html"){
                 "url": "$base${table.UriPrefix}/data",
                 "type": "post",
                 "data": function (d) {
-                    d.unitid = $('#unitid').val();
+                    //d.unitid = $('#unitid').val();
                 }
             },
             "order": [[0, "desc"]],
