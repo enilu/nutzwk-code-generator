@@ -80,8 +80,7 @@ layout("/layouts/private.html"){
                     d.unitid = $('#unitid').val();
                 }
             },
-            //默认排序列
-//            "order": [[0, "desc"]],
+            "order": [[0, "desc"]],
             "columns": [
 #foreach ($column in $table.LabeledColumns)
 #set($columSize=$columSize+1)
