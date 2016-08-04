@@ -56,7 +56,6 @@ layout("/layouts/private.html"){
             success: function (data, statusText, xhr, form) {
                 if (data.code == 0) {
                     Toast.success(data.msg);
-                    //刷新父级菜单
                     form.resetForm();
                 } else {
                     Toast.error(data.msg);

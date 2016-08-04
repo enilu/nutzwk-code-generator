@@ -6,7 +6,7 @@ layout("/layouts/private.html"){
 <section class="content-wrap bg-white">
     <header class="header navbar bg-white shadow">
         <div class="btn-group tool-button">
-            <a id="add" class="btn btn-primary navbar-btn" href="$base${table.UriPrefix}/add" data-pjax><i class="ti-plus"></i> 新建 ${table.Label}</a>
+            <a id="add" class="btn btn-primary navbar-btn" href="$base${table.UriPrefix}/add" data-pjax><i class="ti-plus"></i> 新建${table.Label}</a>
             <button class="btn btn-danger navbar-btn" onclick="delCheck()"><i class="ti-close"></i> 删除选中</button>
         </div>
     </header>
@@ -30,12 +30,12 @@ layout("/layouts/private.html"){
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">删除${table.label}</h4>
+                <h4 class="modal-title">删除</h4>
             </div>
             <div class="modal-body">
                 <div class="row">
                     <div class="col-xs-12">
-                        ${table.Label}删除后无法恢复。<br/>
+                        删除后无法恢复。<br/>
                         <br/>确定删除吗？
                     </div>
                 </div>
@@ -91,8 +91,8 @@ layout("/layouts/private.html"){
                     "render": function (data, type, row) {
                         return '<div class="btn-group"><button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">' +
                                 ' <i class="ti-settings"></i> <span class="ti-angle-down"></span></button><ul class="dropdown-menu" role="menu">' +
-                                '<li><a href="$base${table.UriPrefix}/detail/' + row.id + '" data-toggle="modal" data-target="#dialogDetail">查看信息</a></li>' +
-                                '<li><a href="$base${table.UriPrefix}/edit/' + row.id + '" data-pjax>修改信息</a></li>' +
+                                '<li><a href="$base${table.UriPrefix}/detail/' + row.id + '" data-toggle="modal" data-target="#dialogDetail">查看</a></li>' +
+                                '<li><a href="$base${table.UriPrefix}/edit/' + row.id + '" data-pjax>修改</a></li>' +
                                 '<li class="divider"></li>' +
                                 '<li><a href="javascript:;" onclick="del(\'' + row.id + '\')">删除</a></li>' +
                                 '</ul></div>';
@@ -151,7 +151,7 @@ layout("/layouts/private.html"){
                 }, "json");
             });
         } else {
-            Toast.warning("请先选择要删除的${table.Label}！");
+            Toast.warning("请先选择要删除的项！");
         }
     }
     $(function () {
