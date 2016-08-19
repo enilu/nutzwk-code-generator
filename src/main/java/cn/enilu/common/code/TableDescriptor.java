@@ -79,11 +79,14 @@ public class TableDescriptor {
 	}
 
 	public String getUriPrefix() {
-		return baseUri + getPlural();
+		if(getName().contains("_")){
+			return baseUri+getName().replace("_","/");
+		}
+		return baseUri + getName();
 	}
 
 	public String getViewBasePath() {
-		return baseUri.replaceFirst("/", "") + getPlural();
+		return baseUri.replaceFirst("/", "") + getName();
 	}
 
 	public String getModPackageName() {

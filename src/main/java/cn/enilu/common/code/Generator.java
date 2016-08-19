@@ -223,8 +223,8 @@ public class Generator {
 
 		for (String view : pages) {
 			String templatePath = "code/view/" + view + ".html.vm";
-			File file = new File("src/main/webapp/WEB-INF/views"
-					+ table.getUriPrefix() + "/" + view
+			File file = new File("src/main/webapp/WEB-INF/views/"
+					+ table.getViewBasePath() + "/" + view
 					+ ".html");
 			System.out.println("generate html:"+file.getName());
 			generator.generate(null, templatePath, file, force);

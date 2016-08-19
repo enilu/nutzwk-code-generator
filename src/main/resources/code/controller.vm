@@ -30,7 +30,7 @@ public class ${table.ControllerClassName} {
 	private ${table.ServiceClassName} ${table.ServiceInstanceName};
 
 	@At("")
-	@Ok("beetl:${table.UriPrefix}/index.html")
+	@Ok("beetl:${table.ViewBasePath}/index.html")
 	@RequiresAuthentication
 	public void index() {
 
@@ -45,7 +45,7 @@ public class ${table.ControllerClassName} {
     }
 
     @At
-    @Ok("beetl:${table.UriPrefix}/add.html")
+    @Ok("beetl:${table.ViewBasePath}/add.html")
     @RequiresAuthentication
     public void add() {
 
@@ -64,7 +64,7 @@ public class ${table.ControllerClassName} {
     }
 
     @At("/edit/?")
-    @Ok("beetl:${table.UriPrefix}/edit.html")
+    @Ok("beetl:${table.ViewBasePath}/edit.html")
     @RequiresAuthentication
     public Object edit(${table.pkType} id) {
 		return ${table.ServiceInstanceName}.fetch(id);
@@ -105,7 +105,7 @@ public class ${table.ControllerClassName} {
 
 
     @At("/detail/?")
-    @Ok("beetl:${table.UriPrefix}/detail.html")
+    @Ok("beetl:${table.ViewBasePath}/detail.html")
     @RequiresAuthentication
 	public Object detail(${table.pkType} id) {
 		if (!Strings.isBlank(id)) {
