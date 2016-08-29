@@ -156,6 +156,9 @@ layout("/layouts/private.html"){
     }
     $(function () {
         initDatatable();
+        $("#dialogDetail").on("hidden.bs.modal", function () {
+            $(this).removeData("bs.modal");
+        });
     });
 </script>
 
