@@ -86,7 +86,7 @@ public class TableDescriptor {
 	}
 
 	public String getViewBasePath() {
-		return baseUri.replaceFirst("/", "") + getName();
+		return baseUri.replaceFirst("/", "") + getName().replace("_","/");
 	}
 
 	public String getModPackageName() {
