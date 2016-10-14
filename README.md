@@ -99,4 +99,6 @@
 
 - 会生成和上图一致的代码
  
+ 
+ **IDEA用户配合[nutzwk-plugin](https://github.com/enilu/nutzwk-plugin)使用会更爽哦**
 
