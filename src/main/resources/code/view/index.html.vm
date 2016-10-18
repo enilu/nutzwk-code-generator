@@ -1,5 +1,5 @@
 <%
-layout("/layouts/private.html"){
+layout("/layouts/platform.html"){
 %>
 #set($base = '${base}')
 #set ($columSize=0)
