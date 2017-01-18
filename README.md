@@ -36,8 +36,8 @@
 ## 用法
 ### 在自己的项目中添加依赖
 
-```
-        <dependency>
+```xml
+        <dependency>
                <groupId>cn.enilu.tools</groupId>
                <artifactId>nutzwk-code-generator</artifactId>
                <version>1.2</version>
@@ -47,7 +47,7 @@
 ### 1,根据java实体生成相关代码(推荐使用）
 - 准备 java model类：
 
-    
+```java
         @Comment("国家")
         @Table("dic_country")
         public class DicCountry  implements Serializable {
@@ -66,7 +66,8 @@
             setter...
             getter...   
         }
-      
+```
+
 - 运行Generator类的时候加上如下参数：         
     
         -i DicCountry -p cn.wizzer.modules.back.sys  -u /private/sys
@@ -81,6 +82,7 @@
 
 - 比如使用下面语句建表：
 
+```sql
         CREATE TABLE `dic_country` (
           `id` varchar(32) NOT NULL,
           `code` varchar(32) DEFAULT NULL COMMENT 'label:值',
@@ -89,6 +91,7 @@
           `updateAt` int(30) DEFAULT NULL,
           PRIMARY KEY (`id`)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='label:国家号';
+```
 
 - 更改/code/code.json(如果没有请参考本项目中新建）loader配置为：TableDescLoader
 - 确保项目中有mysql驱动
