@@ -1,15 +1,5 @@
 package cn.enilu.common.code;
 
-import org.nutz.dao.Dao;
-import org.nutz.dao.Sqls;
-import org.nutz.dao.impl.NutDao;
-import org.nutz.dao.sql.Sql;
-import org.nutz.dao.sql.SqlCallback;
-import org.nutz.ioc.Ioc;
-import org.nutz.ioc.impl.NutIoc;
-import org.nutz.ioc.loader.json.JsonLoader;
-
-import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -18,6 +8,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.sql.DataSource;
+
+import org.nutz.dao.Dao;
+import org.nutz.dao.Sqls;
+import org.nutz.dao.impl.NutDao;
+import org.nutz.dao.sql.Sql;
+import org.nutz.dao.sql.SqlCallback;
+import org.nutz.ioc.Ioc;
 
 /**
  * 根据数据库结构生成model,service,controller,views<br>

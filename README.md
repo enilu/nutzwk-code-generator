@@ -13,8 +13,14 @@
 
 ## 使用手册
 
+下载地址: https://github.com/enilu/nutzwk-code-generator/releases
+
+```
+java -jar nutzwk-code-generator-1.3.jar [-lo]
+```
 
         usage: Main [options] [all|entity|service|controller|view]
+         -loader                默认是entity,按pojo生成service和module类, 可以改成table,按数据库信息生成pojo
          -c,--config <arg>      spring datasource config file(classpath)
          -ctr,--package <arg>   controller base package
                                 name,default:${package}/controllers
@@ -93,7 +99,7 @@
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='label:国家号';
 ```
 
-- 更改/code/code.json(如果没有请参考本项目中新建）loader配置为：TableDescLoader
+- 更改db.properties(如果没有请参考本项目中新建）
 - 确保项目中有mysql驱动
 - 运行Generator类的时候加上如下参数：         
     

@@ -5,9 +5,13 @@ import org.nutz.ioc.Ioc;
 import org.nutz.lang.Files;
 import org.nutz.lang.Mirror;
 import org.nutz.lang.Strings;
+import org.nutz.log.Log;
+import org.nutz.log.Logs;
+
 import java.io.File;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.net.URL;
 import java.net.URLDecoder;
 
 import java.util.HashMap;
@@ -20,12 +24,23 @@ import java.util.Map;
  * 创建日期: 16-7-10<br>
  */
 public class EntityDescLoader extends  Loader {
+    
+    private static final Log log = Logs.get();
+    
     @Override
     public Map<String, TableDescriptor> loadTables(Ioc ioc, String basePackageName, String baseUri, String servPackageName, String modPackageName) throws Exception {
         String packageName = basePackageName+"."+modPackageName;
 
         String filePath = packageName.replaceAll("\\.","\\/");
-        String   path = Loader.class.getClassLoader().getResource(filePath).getPath();
+        URL url = Loader.class.getClassLoader().getResource(filePath);
+        String path;
+        if (url != null)
+            path = url.getPath();
+        else {
+            path = "out/" + basePackageName.replace('.', '/');
+        }
+        File f = Files.createDirIfNoExists(path);
+        log.debug("output dir = " + f.getAbsolutePath());
         String abstractPath = URLDecoder.decode(path, "utf8");
         File[] files = Files.lsFile(abstractPath, null);
         Map<String, TableDescriptor> tables = new HashMap<String, TableDescriptor>();

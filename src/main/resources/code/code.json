@@ -1,22 +1,21 @@
-{
-  dataSource : {
-    type : "com.alibaba.druid.pool.DruidDataSource",
-    events : {
-      depose : 'close'
-    },
-    fields : {
-      driverClassName : "com.mysql.jdbc.Driver",
-      url : "jdbc:mysql://localhost:3306/nutzwk",
-      username : "root",
-      password : "root",
-      maxWait: 20000,
-      defaultAutoCommit : false
-    }
-  },
-    loader:{
-        //根据实体生成代码
-        type:'cn.enilu.common.code.EntityDescLoader'
-        //根据表结构生成代码
-//        type:'cn.enilu.common.code.TableDescLoader'
-    }
+var ioc = {
+		conf : {
+			type : "org.nutz.ioc.impl.PropertiesProxy",
+			fields : {
+				paths : ["/db.properties"]
+			}
+		},
+	    dataSource : {
+	        factory : "$conf#make",
+	        args : ["com.alibaba.druid.pool.DruidDataSource", "db."],
+	        type : "com.alibaba.druid.pool.DruidDataSource",
+	        events : {
+	        	create : "init",
+	            depose : 'close'
+	        }
+	    },
+		dao : {
+			type : "org.nutz.dao.impl.NutDao",
+			args : [{refer:"dataSource"}]
+		}
 }
