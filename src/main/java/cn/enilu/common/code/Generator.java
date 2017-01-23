@@ -6,6 +6,7 @@ import org.apache.velocity.app.VelocityEngine;
 
 import org.nutz.ioc.Ioc;
 import org.nutz.ioc.impl.NutIoc;
+import org.nutz.ioc.impl.PropertiesProxy;
 import org.nutz.ioc.loader.json.JsonLoader;
 import org.nutz.lang.Files;
 import org.nutz.lang.Lang;
@@ -16,6 +17,7 @@ import org.nutz.log.Log;
 import org.nutz.log.Logs;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.StringWriter;
 
@@ -72,7 +74,7 @@ public class Generator {
     // -p export -c /generator.xml entity
     public static void main(String[] args) throws Exception {
 
-        String configPath = "/code/code.json";
+        String configPath = "code/code.json";
 
         Pattern includePattern = Pattern.compile(".*");
         Pattern excludePattern = null;
@@ -166,6 +168,23 @@ public class Generator {
             usage(options);
         }
         Ioc ioc = new NutIoc(new JsonLoader(configPath));
+        PropertiesProxy conf = ioc.get(PropertiesProxy.class, "conf");
+        File f = new File("db.properties");
+        if (f.exists()) {
+            log.debug("load >> " + f.getAbsolutePath());
+            conf.load(new FileReader(f));
+        } else {
+            log.debug("using default db.properties");
+        }
+
+        log.debug("=================================================");
+        log.debug("=================================================");
+        log.debug("=================================================");
+        for (String key : conf.keys()) {
+            log.debugf("%s=%s", key, conf.get(key));
+        }
+        log.debug("=================================================");
+        log.debug("=================================================");
 
         Loader loader = (Loader) Mirror.me(Lang.loadClassQuite("cn.enilu.common.code." + Strings.upperFirst(_loader) + "DescLoader")).born();
         Map<String, TableDescriptor> tables = loader.loadTables(ioc,
@@ -255,7 +274,7 @@ public class Generator {
 
     private static void usage(Options options) {
         HelpFormatter formatter = new HelpFormatter();
-        formatter.printHelp("Main [options] [all|entity|service|controller|view]", options);
+        formatter.printHelp("Generator [options] [all|entity|service|controller|view]", options);
         System.exit(1);
     }
 
