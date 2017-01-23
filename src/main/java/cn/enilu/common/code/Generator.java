@@ -174,7 +174,7 @@ public class Generator {
             log.debug("load >> " + f.getAbsolutePath());
             conf.load(new FileReader(f));
         } else {
-            log.debug("using default db.properties");
+            log.debug("not db.properties found in this dir, using defalut configure");
         }
 
         log.debug("=================================================");

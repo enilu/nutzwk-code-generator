@@ -5,19 +5,59 @@
 - 这么比貌似不厚道，因为其他生成器不仅功能强大，而且还有ui界面。
 - 配合IDEA插件：nutzwk-plugin（提供了gui）一起使用会更爽哦，
 
+手册看花眼了吧，那就去用IDEA搜索插件[nutzwk-plugin](https://github.com/enilu/nutzwk-plugin),酱紫就不用记这些冷冰冰的命令行了
+
 ## 功能介绍
 - 自动生成nutzwk的代码，包括model、service、controller和view
 - 根据事先建立好的model类，生成对应service，controller和view层代码
 - 包括功能：添加，修改，删除，批量删除，分页查询功能。
 - 模板引擎使用velocity
 
-## 使用手册
+## 独立版的用法
 
-下载地址: https://github.com/enilu/nutzwk-code-generator/releases
+下载地址: https://github.com/enilu/nutzwk-code-generator/releases 下载最新的jar
+
+在jar所在的目录内,新建一个db.properties文件, 内容如下,按你本地实际数据参数写哦
 
 ```
-java -jar nutzwk-code-generator-1.3.jar [-lo]
+#mysql
+db.url=jdbc:mysql://127.0.0.1:3306/nutzbook
+db.username=root
+db.password=root
+db.validationQuery=select 1
+db.maxActive=50
+db.testWhileIdle=true
+db.filters=mergeStat
+db.connectionProperties=druid.stat.slowSqlMillis=2000
+db.defaultAutoCommit=true
+
+#oracle
+#db.url=jdbc:oracle:thin:@//192.168.72.101:1521/xe
+#db.username=system
+#db.password=oracle
+#db.validationQuery=select 1 from dual
+#db.maxActive=100
+
+#postgresql
+#db.url=jdbc:postgresql://127.0.0.1:5432/nutzbook
+#db.username=postgres
+#db.password=root
+#db.validationQuery=select 1
+#db.maxActive=100
+
+#db.url=jdbc:h2:~/nutzbook
+#db.username=sa
+#db.password=
 ```
+
+### 执行按下面的命令生成pojo
+
+```
+java -jar nutzwk-code-generator-1.3.1.jar -loader table --package net.wendal.nutzbook
+```
+
+
+详细参数
 
         usage: Main [options] [all|entity|service|controller|view]
          -loader                默认是entity,按pojo生成service和module类, 可以改成table,按数据库信息生成pojo
@@ -36,10 +76,11 @@ java -jar nutzwk-code-generator-1.3.jar [-lo]
          -v,--views <arg>       for generator pages,default:all pages,eg: -v index_detail  ,will generate index.html and
                                 detail.html
          -x,--exclude <arg>     exclude table pattern
+         
 
-手册看花眼了吧，那就去用IDEA搜索插件[nutzwk-plugin](https://github.com/enilu/nutzwk-plugin),酱紫就不用记这些冷冰冰的命令行了
 
-## 用法
+
+## 插件版用法
 ### 在自己的项目中添加依赖
 
 ```xml
