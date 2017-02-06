@@ -76,7 +76,7 @@ layout("/layouts/platform.html"){
                 "url": "$base${table.UriPrefix}/data",
                 "type": "post",
                 "data": function (d) {
-                    //d.unitid = $('#unitid').val();
+                    //d.nutz = $('#nutz').val();
                 }
             },
             "order": [[0, "desc"]],

@@ -83,6 +83,7 @@ public class EntityDescLoader extends  Loader {
                 for(Annotation annotation :annotations){
                     if(annotation instanceof  Comment){
                         column.setLabel(((Comment) annotation).value());
+                        column.setComment(((Comment) annotation).value());
                     }
                     if(annotation instanceof  Id||annotation instanceof Name){
                         column.primary=true;

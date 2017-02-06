@@ -276,7 +276,7 @@ public class TableDescriptor {
 
         for (ColumnDescriptor column : columns) {
             if (!Strings.isBlank(column.getLabel())
-                    && !"id".equals(column.columnName)) {
+                    && !"id".equalsIgnoreCase(column.columnName)) {
                 result.add(column);
             }
         }
